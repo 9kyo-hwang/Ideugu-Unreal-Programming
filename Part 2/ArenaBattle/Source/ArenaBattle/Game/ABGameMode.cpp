@@ -5,13 +5,11 @@
 
 AABGameMode::AABGameMode()
 {
-	// TODO: DefaultPawnClass에 대한 설정
-	// BP_ThirdPersonCharacter를 지정할 것이기 때문에, Reference 경로를 가져와서 설정
-	// 에셋 경로만 지정해주면 됨. Script/Engine.Blueprint 부분은 필요없으며, Class 정보를 가져와야 해서 맨 뒤에 _C 접미사를 붙여야 함.
-	static ConstructorHelpers::FClassFinder<APawn> ThirdPersonClassRef(TEXT("/Game/ThirdPerson/Blueprints/BP_ThirdPersonCharacter.BP_ThirdPersonCharacter_C"));
-	if(ThirdPersonClassRef.Class != nullptr)
+	// TODO: ThirdPerson이 아닌 ABCharacterPlayer를 스폰하도록 변경
+	static ConstructorHelpers::FClassFinder<APawn> DefaultPawnClassRef(TEXT("/Script/ArenaBattle.ABCharacterPlayer"));
+	if(DefaultPawnClassRef.Class)
 	{
-		DefaultPawnClass = ThirdPersonClassRef.Class;
+		DefaultPawnClass = DefaultPawnClassRef.Class;
 	}
 	
 	// TODO: PlayerControllerClass에 대한 설정

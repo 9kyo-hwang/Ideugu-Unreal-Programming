@@ -6,6 +6,9 @@
 #include "GameFramework/Character.h"
 #include "ABCharacterBase.generated.h"
 
+UENUM()
+enum class ECharacterControlType : uint8 { Shoulder, Quarter };
+
 UCLASS()
 class ARENABATTLE_API AABCharacterBase : public ACharacter
 {
@@ -16,14 +19,9 @@ public:
 	AABCharacterBase();
 
 protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+	virtual void SetCharacterDataAsset(const class UABCharacterDataAsset* CharacterDataAsset);
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
+	// Enum 데이터를 키로 해서 컨트롤 데이터 에셋을 받아올 수 있도록 변수 선언
+	UPROPERTY(EditAnywhere, Category=CharacterControl, meta=(AllowPrivateAccess="true"))
+	TMap<ECharacterControlType, class UABCharacterDataAsset*> CharacterControlManager;
 };
