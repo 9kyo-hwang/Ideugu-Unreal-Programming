@@ -23,12 +23,10 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	// 객체 타입이므로 VisibleAnywhere
-	// BP 상속 시 수정 가능하도록
-	// 언리얼 헤더 툴에 의해 자동으로 Mesh 카테고리의 Body에 대한 값을 편집할 수 있도록 함
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category=Mesh)
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Mesh)
 	TObjectPtr<class UStaticMeshComponent> Body;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category=Mesh)
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Mesh)
 	TObjectPtr<class UStaticMeshComponent> Water;
+
 };

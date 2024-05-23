@@ -7,7 +7,11 @@
 #include "ABCharacterBase.generated.h"
 
 UENUM()
-enum class ECharacterControlType : uint8 { Shoulder, Quarter };
+enum class ECharacterControlType : uint8
+{
+	Shoulder,
+	Quater
+};
 
 UCLASS()
 class ARENABATTLE_API AABCharacterBase : public ACharacter
@@ -19,9 +23,8 @@ public:
 	AABCharacterBase();
 
 protected:
-	virtual void SetCharacterDataAsset(const class UABCharacterDataAsset* CharacterDataAsset);
+	virtual void SetCharacterControlData(const class UABCharacterControlData* CharacterControlData);
 
-	// Enum 데이터를 키로 해서 컨트롤 데이터 에셋을 받아올 수 있도록 변수 선언
-	UPROPERTY(EditAnywhere, Category=CharacterControl, meta=(AllowPrivateAccess="true"))
-	TMap<ECharacterControlType, class UABCharacterDataAsset*> CharacterControlManager;
+	UPROPERTY(EditAnywhere, Category = CharacterControl, Meta = (AllowPrivateAccess = "true"))
+	TMap<ECharacterControlType, class UABCharacterControlData*> CharacterControlManager;
 };

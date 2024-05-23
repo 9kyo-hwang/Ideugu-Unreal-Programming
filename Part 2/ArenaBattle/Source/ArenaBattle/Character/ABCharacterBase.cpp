@@ -2,71 +2,70 @@
 
 
 #include "Character/ABCharacterBase.h"
-
-#include "ABCharacterDataAsset.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "ABCharacterControlData.h"
 
 // Sets default values
 AABCharacterBase::AABCharacterBase()
 {
- 	// TODO: Pawn Setting
-	
-	// 회전을 위해 세팅
+	// Pawn
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationYaw = false;
 	bUseControllerRotationRoll = false;
 
-	// Capsule 설정
-	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.f);
+	// Capsule
+	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
 	GetCapsuleComponent()->SetCollisionProfileName(TEXT("Pawn"));
 
-	// Movement Component
+	// Movement
 	GetCharacterMovement()->bOrientRotationToMovement = true;
-	GetCharacterMovement()->RotationRate = FRotator(0, 500, 0);
-	GetCharacterMovement()->JumpZVelocity = 700.0f;
+	GetCharacterMovement()->RotationRate = FRotator(0.0f, 500.0f, 0.0f);
+	GetCharacterMovement()->JumpZVelocity = 700.f;
 	GetCharacterMovement()->AirControl = 0.35f;
-	GetCharacterMovement()->MaxWalkSpeed = 500.0f;
-	GetCharacterMovement()->MinAnalogWalkSpeed = 20.0f;
-	GetCharacterMovement()->BrakingDecelerationWalking = 2000.0f;
+	GetCharacterMovement()->MaxWalkSpeed = 500.f;
+	GetCharacterMovement()->MinAnalogWalkSpeed = 20.f;
+	GetCharacterMovement()->BrakingDecelerationWalking = 2000.f;
 
 	// Mesh
 	GetMesh()->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, -100.0f), FRotator(0.0f, -90.0f, 0.0f));
 	GetMesh()->SetAnimationMode(EAnimationMode::AnimationBlueprint);
 	GetMesh()->SetCollisionProfileName(TEXT("CharacterMesh"));
 
-	// 실제 에셋 부착
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh> CharacterMeshRef(TEXT("/Script/Engine.SkeletalMesh'/Game/Characters/Mannequins/Meshes/SKM_Quinn_Simple.SKM_Quinn_Simple'"));
-	if(CharacterMeshRef.Object)
+	if (CharacterMeshRef.Object)
 	{
 		GetMesh()->SetSkeletalMesh(CharacterMeshRef.Object);
 	}
 
 	static ConstructorHelpers::FClassFinder<UAnimInstance> AnimInstanceClassRef(TEXT("/Game/Characters/Mannequins/Animations/ABP_Quinn.ABP_Quinn_C"));
-	if(AnimInstanceClassRef.Class)
+	if (AnimInstanceClassRef.Class)
 	{
 		GetMesh()->SetAnimInstanceClass(AnimInstanceClassRef.Class);
 	}
 
-	static ConstructorHelpers::FObjectFinder<UABCharacterDataAsset> ShoulderDataAssetRef(TEXT("/Script/Engine.Blueprint'/Game/ArenaBattle/CharacterControl/ABC_Shoulder.ABC_Shoulder'"));
-	if(ShoulderDataAssetRef.Object)
+	static ConstructorHelpers::FObjectFinder<UABCharacterControlData> ShoulderDataRef(TEXT("/Script/ArenaBattle.ABCharacterControlData'/Game/ArenaBattle/CharacterControl/ABC_Shoulder.ABC_Shoulder'"));
+	if (ShoulderDataRef.Object)
 	{
-		CharacterControlManager.Add(ECharacterControlType::Shoulder, ShoulderDataAssetRef.Object);
+		CharacterControlManager.Add(ECharacterControlType::Shoulder, ShoulderDataRef.Object);
 	}
-	static ConstructorHelpers::FObjectFinder<UABCharacterDataAsset> QuarterDataAssetRef(TEXT("/Script/Engine.Blueprint'/Game/ArenaBattle/CharacterControl/ABC_Quarter.ABC_Quarter'"));
-	if(QuarterDataAssetRef.Object)
+
+	static ConstructorHelpers::FObjectFinder<UABCharacterControlData> QuaterDataRef(TEXT("/Script/ArenaBattle.ABCharacterControlData'/Game/ArenaBattle/CharacterControl/ABC_Quater.ABC_Quater'"));
+	if (QuaterDataRef.Object)
 	{
-		CharacterControlManager.Add(ECharacterControlType::Quarter, QuarterDataAssetRef.Object);
+		CharacterControlManager.Add(ECharacterControlType::Quater, QuaterDataRef.Object);
 	}
 }
 
-void AABCharacterBase::SetCharacterDataAsset(const UABCharacterDataAsset* CharacterDataAsset)
+void AABCharacterBase::SetCharacterControlData(const UABCharacterControlData* CharacterControlData)
 {
 	// Pawn
-	bUseControllerRotationYaw = CharacterDataAsset->bUseControllerRotationYaw;
+	bUseControllerRotationYaw = CharacterControlData->bUseControllerRotationYaw;
 
 	// CharacterMovement
-	GetCharacterMovement()->bOrientRotationToMovement = CharacterDataAsset->bOrientRotationToMovement;
-	GetCharacterMovement()->bUseControllerDesiredRotation = CharacterDataAsset->bUseControllerDesiredRotation;
-	GetCharacterMovement()->RotationRate = CharacterDataAsset->RotationRate;
+	GetCharacterMovement()->bOrientRotationToMovement = CharacterControlData->bOrientRotationToMovement;
+	GetCharacterMovement()->bUseControllerDesiredRotation = CharacterControlData->bUseControllerDesiredRotation;
+	GetCharacterMovement()->RotationRate = CharacterControlData->RotationRate;
 }
+
+
