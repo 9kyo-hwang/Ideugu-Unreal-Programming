@@ -46,13 +46,13 @@ AABCharacterPlayer::AABCharacterPlayer()
 		ShoulderLookAction = InputActionShoulderLookRef.Object;
 	}
 
-	static ConstructorHelpers::FObjectFinder<UInputAction> InputActionQuaterMoveRef(TEXT("/Script/EnhancedInput.InputAction'/Game/ArenaBattle/Input/Actions/IA_QuaterMove.IA_QuaterMove'"));
-	if (nullptr != InputActionQuaterMoveRef.Object)
+	static ConstructorHelpers::FObjectFinder<UInputAction> InputActionQuarterMoveRef(TEXT("/Script/EnhancedInput.InputAction'/Game/ArenaBattle/Input/Actions/IA_QuaterMove.IA_QuaterMove'"));
+	if (nullptr != InputActionQuarterMoveRef.Object)
 	{
-		QuaterMoveAction = InputActionQuaterMoveRef.Object;
+		QuarterMoveAction = InputActionQuarterMoveRef.Object;
 	}
 
-	CurrentCharacterControlType = ECharacterControlType::Quater;
+	CurrentCharacterControlType = ECharacterControlType::Quarter;
 }
 
 void AABCharacterPlayer::BeginPlay()
@@ -73,18 +73,18 @@ void AABCharacterPlayer::SetupPlayerInputComponent(class UInputComponent* Player
 	EnhancedInputComponent->BindAction(ChangeControlAction, ETriggerEvent::Triggered, this, &AABCharacterPlayer::ChangeCharacterControl);
 	EnhancedInputComponent->BindAction(ShoulderMoveAction, ETriggerEvent::Triggered, this, &AABCharacterPlayer::ShoulderMove);
 	EnhancedInputComponent->BindAction(ShoulderLookAction, ETriggerEvent::Triggered, this, &AABCharacterPlayer::ShoulderLook);
-	EnhancedInputComponent->BindAction(QuaterMoveAction, ETriggerEvent::Triggered, this, &AABCharacterPlayer::QuaterMove);
+	EnhancedInputComponent->BindAction(QuarterMoveAction, ETriggerEvent::Triggered, this, &AABCharacterPlayer::QuarterMove);
 }
 
 void AABCharacterPlayer::ChangeCharacterControl()
 {
-	if (CurrentCharacterControlType == ECharacterControlType::Quater)
+	if (CurrentCharacterControlType == ECharacterControlType::Quarter)
 	{
 		SetCharacterControl(ECharacterControlType::Shoulder);
 	}
 	else if (CurrentCharacterControlType == ECharacterControlType::Shoulder)
 	{
-		SetCharacterControl(ECharacterControlType::Quater);
+		SetCharacterControl(ECharacterControlType::Quarter);
 	}
 }
 
@@ -99,8 +99,7 @@ void AABCharacterPlayer::SetCharacterControl(ECharacterControlType NewCharacterC
 	if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
 	{
 		Subsystem->ClearAllMappings();
-		UInputMappingContext* NewMappingContext = NewCharacterControl->InputMappingContext;
-		if (NewMappingContext)
+		if (UInputMappingContext* NewMappingContext = NewCharacterControl->InputMappingContext)
 		{
 			Subsystem->AddMappingContext(NewMappingContext, 0);
 		}
@@ -144,7 +143,7 @@ void AABCharacterPlayer::ShoulderLook(const FInputActionValue& Value)
 	AddControllerPitchInput(LookAxisVector.Y);
 }
 
-void AABCharacterPlayer::QuaterMove(const FInputActionValue& Value)
+void AABCharacterPlayer::QuarterMove(const FInputActionValue& Value)
 {
 	FVector2D MovementVector = Value.Get<FVector2D>();
 
