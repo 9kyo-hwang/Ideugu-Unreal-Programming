@@ -5,8 +5,11 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Interface/ABAnimationAttackInterface.h"
+#include "Interface/ABCharacterItemInterface.h"
 #include "Interface/ABCharacterWidgetInterface.h"
 #include "ABCharacterBase.generated.h"
+
+DECLARE_LOG_CATEGORY_EXTERN(LogABCharacter, Log, All);
 
 UENUM()
 enum class ECharacterControlType : uint8
@@ -15,8 +18,21 @@ enum class ECharacterControlType : uint8
 	Quarter
 };
 
+// 다수의 객체를 배열로 관리하려고 하지만, 이 자체는 인자로 사용할 수 없음 -> Wrapping 구조체 선언
+DECLARE_DELEGATE_OneParam(FOnTakeItemDelegate, class UABItemData* /*InItemData*/);
+USTRUCT(BlueprintType)
+struct FTakeItemDelegateWrapper
+{
+	GENERATED_BODY()
+	
+	FTakeItemDelegateWrapper() {}
+	FTakeItemDelegateWrapper(const FOnTakeItemDelegate& InItemDelegate) : ItemDelegate(InItemDelegate) {}
+	
+	FOnTakeItemDelegate ItemDelegate;
+};
+
 UCLASS()
-class ARENABATTLE_API AABCharacterBase : public ACharacter, public IABAnimationAttackInterface, public IABCharacterWidgetInterface
+class ARENABATTLE_API AABCharacterBase : public ACharacter, public IABAnimationAttackInterface, public IABCharacterWidgetInterface, public IABCharacterItemInterface
 {
 	GENERATED_BODY()
 
@@ -84,4 +100,18 @@ protected:
 	TObjectPtr<class UABWidgetComponent> HpBar;  // UABWidgetComponent로 변경!
 
 	virtual void SetupCharacterWidget(UABUserWidget* InUserWidget) override;
+
+	// Item Section
+protected:
+	virtual void TakeItem(class UABItemData* InItemData) override;
+
+	virtual void DrinkPotion(class UABItemData* InItemData);
+	virtual void EquipWeapon(class UABItemData* InItemData);
+	virtual void ReadScroll(class UABItemData* InItemData);
+	
+	UPROPERTY()
+	TArray<FTakeItemDelegateWrapper> TakeItemActions;  // 위 3가지 함수가 바인딩됨
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Equipment, meta=(AllowPrivateAccess="true"))
+	TObjectPtr<class USkeletalMeshComponent> Weapon;  // 무기를 담을 스켈레탈 메시 컴포넌트
 };
