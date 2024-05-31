@@ -10,7 +10,6 @@
 #include "CharacterStat/ABCharacterStatComponent.h"
 #include "Engine/DamageEvents.h"
 #include "Physics/ABCollision.h"
-#include "CharacterStat/ABCharacterStatComponent.h"
 #include "Item/ABItemData.h"
 #include "Item/ABWeaponItemData.h"
 #include "UI/ABWidgetComponent.h"
@@ -213,18 +212,20 @@ void AABCharacterBase::ComboCheck()
 void AABCharacterBase::AttackHitCheck()
 {
 	// TODO: Trace 채널을 이용해 물체가 서로 충돌하는 지 검사하는 로직 작성
-	FHitResult OutHit;
-	FCollisionQueryParams Params(SCENE_QUERY_STAT(Attack), true, this);
-
 	constexpr float AttackRange = 40.0f;
 	constexpr float AttackRadius = 50.0f;
-	constexpr float AttackDamage = 30.0f;
-	const FVector Start = GetActorLocation() + GetActorForwardVector() * GetCapsuleComponent()->GetScaledCapsuleRadius();
-	const FVector End = Start + GetActorForwardVector() * AttackRange;
-
+	constexpr float AttackDamage = 100.0f;
+	FHitResult OutHit;
 	// SweepSingleByChannel: World가 제공 -> GetWorld로부터 획득
-	bool HitDetected = GetWorld()->SweepSingleByChannel(OutHit, Start, End, FQuat::Identity, CCHANNEL_ABACTION, FCollisionShape::MakeSphere(AttackRadius), Params);
-	if(HitDetected)
+	if(GetWorld()->SweepSingleByChannel(
+		OutHit,
+		GetActorLocation() + GetActorForwardVector() * GetCapsuleComponent()->GetScaledCapsuleRadius(),
+		GetActorLocation() + GetActorForwardVector() * GetCapsuleComponent()->GetScaledCapsuleRadius() + GetActorForwardVector() * AttackRange,
+		FQuat::Identity,
+		CCHANNEL_ABACTION,
+		FCollisionShape::MakeSphere(AttackRadius),
+		FCollisionQueryParams(SCENE_QUERY_STAT(Attack), true, this)
+	))
 	{
 		// TODO: TakeDamage 함수를 호출해 데미지 전달
 		FDamageEvent DamageEvent;
@@ -232,9 +233,17 @@ void AABCharacterBase::AttackHitCheck()
 	}
 	
 #if ENABLE_DRAW_DEBUG
-	FVector CapsuleOrigin = Start + (End - Start) * 0.5f;
+	FVector CapsuleOrigin = GetActorLocation() + GetActorForwardVector() * GetCapsuleComponent()->GetScaledCapsuleRadius() + (GetActorLocation() + GetActorForwardVector() * GetCapsuleComponent()->GetScaledCapsuleRadius() + GetActorForwardVector() * AttackRange - (GetActorLocation() + GetActorForwardVector() * GetCapsuleComponent()->GetScaledCapsuleRadius())) * 0.5f;
 	float CapsuleHalfHeight = AttackRange * 0.5f;
-	FColor DrawColor = HitDetected ? FColor::Green : FColor::Red;
+	FColor DrawColor = GetWorld()->SweepSingleByChannel(
+		                   OutHit,
+		                   GetActorLocation() + GetActorForwardVector() * GetCapsuleComponent()->GetScaledCapsuleRadius(),
+		                   GetActorLocation() + GetActorForwardVector() * GetCapsuleComponent()->GetScaledCapsuleRadius() + GetActorForwardVector() * AttackRange,
+		                   FQuat::Identity,
+		                   CCHANNEL_ABACTION,
+		                   FCollisionShape::MakeSphere(AttackRadius),
+		                   FCollisionQueryParams(SCENE_QUERY_STAT(Attack), true, this)
+	                   ) ? FColor::Green : FColor::Red;
 
 	DrawDebugCapsule(GetWorld(), CapsuleOrigin, CapsuleHalfHeight, AttackRadius, FRotationMatrix::MakeFromZ(GetActorForwardVector()).ToQuat(), DrawColor, false, 5.0f);
 #endif 

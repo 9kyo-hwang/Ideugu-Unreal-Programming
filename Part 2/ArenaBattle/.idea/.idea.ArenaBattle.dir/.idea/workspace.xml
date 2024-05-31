@@ -8,11 +8,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bf1b45cf-66b2-43d8-895f-f71b82eb2926" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.ArenaBattle.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ArenaBattle.dir/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultGame.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultGame.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ArenaBattle/Environment/Stages/SM_SQUARE.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ArenaBattle/Environment/Stages/SM_SQUARE.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ArenaBattle/Item/Potion/ABIS_PotionTest.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ArenaBattle/Item/Potion/ABIS_PotionTest.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ArenaBattle/Item/Scroll/ABIS_ScrollTest.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ArenaBattle/Item/Scroll/ABIS_ScrollTest.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ArenaBattle/Item/Weapon/ABIW_Weapon1.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ArenaBattle/Item/Weapon/ABIW_Weapon1.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/ArenaBattle/Maps/Step4.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ArenaBattle/Maps/Step4.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/InfinityBladeWarriors/Character/CompleteCharacters/SK_Mannequin_Skeleton.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/InfinityBladeWarriors/Character/CompleteCharacters/SK_Mannequin_Skeleton.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ArenaBattle/Character/ABCharacterBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ArenaBattle/Character/ABCharacterBase.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ArenaBattle/Character/ABCharacterBase.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ArenaBattle/Character/ABCharacterBase.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ArenaBattle/Item/ABItemBox.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ArenaBattle/Item/ABItemBox.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ArenaBattle/Item/ABItemBox.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ArenaBattle/Item/ABItemBox.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ArenaBattle/Item/ABItemData.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ArenaBattle/Item/ABItemData.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ArenaBattle/Item/ABWeaponItemData.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ArenaBattle/Item/ABWeaponItemData.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,10 +37,12 @@
     <setting file="file://$PROJECT_DIR$/Source/ArenaBattle/CharacterStat/ABCharacterStatComponent.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/ArenaBattle/Interface/ABAnimationAttackInterface.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/ArenaBattle/Interface/ABAnimationAttackInterface.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://D:/Github/Ideugu-Unreal-Programming/Part 2/ArenaBattle/Source/ArenaBattle/Item/ABItemBox.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/ArenaBattle/Physics/ABCollision.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/ArenaBattle/UI/ABHpBarWidget.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/ArenaBattle/UI/ABHpBarWidget.h" root0="FORCE_HIGHLIGHTING" />
   </component>
+  <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -230,12 +239,14 @@
       <workItem from="1717000670695" duration="1862000" />
       <workItem from="1717002550777" duration="5647000" />
       <workItem from="1717082827595" duration="12569000" />
+      <workItem from="1717160352044" duration="14345000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />

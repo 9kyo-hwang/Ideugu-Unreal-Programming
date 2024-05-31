@@ -3,7 +3,9 @@
 
 #include "Item/ABItemBox.h"
 
+#include "ABItemData.h"
 #include "Components/BoxComponent.h"
+#include "Engine/AssetManager.h"
 #include "Interface/ABCharacterItemInterface.h"
 #include "Particles/ParticleSystemComponent.h"
 #include "Physics/ABCollision.h"
@@ -42,8 +44,28 @@ AABItemBox::AABItemBox()
 	}
 }
 
+void AABItemBox::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+
+	// 엔진 초기화 시점에서 로딩 보장
+	UAssetManager& AssetManager = UAssetManager::Get();
+
+	if(TArray<FPrimaryAssetId> Assets; AssetManager.GetPrimaryAssetIdList(TEXT("ABItemData"), Assets))
+	{
+		int32 RandomIndex = FMath::RandRange(0, Assets.Num() - 1);
+		FSoftObjectPtr AssetPtr(AssetManager.GetPrimaryAssetPath(Assets[RandomIndex]));
+		if(AssetPtr.IsPending())  // 약 참조이므로, 로딩을 시켜줘야 함
+		{
+			AssetPtr.LoadSynchronous();
+		}
+		Item = Cast<UABItemData>(AssetPtr.Get());
+		ensure(Item);
+	}
+}
+
 void AABItemBox::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
-	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepHitResult)
+                                UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepHitResult)
 {
 	if(nullptr == Item)  // Item이 꽝이라면 즉시 파괴 후 return
 	{

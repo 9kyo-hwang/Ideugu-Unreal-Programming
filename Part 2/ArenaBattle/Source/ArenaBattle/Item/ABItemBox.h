@@ -15,6 +15,13 @@ public:
 	// Sets default values for this actor's properties
 	AABItemBox();
 
+	// StageGimmick에서 Item Spawn을 위해 Trigger에 대한 Getter 추가
+	FORCEINLINE class UBoxComponent* GetTrigger() { return Trigger; }
+
+protected:
+	// 아이템 박스가 초기화됐을 때, 에셋 매니저의 목록을 순회해 랜덤하게 1개를 선택해 할당하는 함수
+	virtual void PostInitializeComponents() override;
+
 protected:
 	// 오버랩 이벤트를 감지하기 위한 델리게이트가 선언되어 있음 -> 함수 연결
 	UPROPERTY(VisibleAnywhere, Category=Box)

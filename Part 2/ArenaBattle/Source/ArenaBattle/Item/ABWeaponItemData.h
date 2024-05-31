@@ -17,4 +17,9 @@ class ARENABATTLE_API UABWeaponItemData : public UABItemData
 public:
 	UPROPERTY(EditAnywhere, Category=Weapon)
 	TSoftObjectPtr<class USkeletalMesh> WeaponMesh;  // Soft Referencing
+
+	FORCEINLINE virtual FPrimaryAssetId GetPrimaryAssetId() const override
+	{
+		return FPrimaryAssetId("ABItemData", GetFName());
+	}
 };
