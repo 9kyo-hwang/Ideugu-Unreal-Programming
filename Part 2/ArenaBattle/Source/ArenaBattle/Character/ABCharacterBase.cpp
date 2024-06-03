@@ -156,7 +156,7 @@ void AABCharacterBase::ComboActionBegin()
 	GetCharacterMovement()->SetMovementMode(MOVE_None);  // 이동 제한
 
 	// Animation Setting
-	constexpr float AttackSpeedRate = 1.0f;
+	const float AttackSpeedRate = Stat->GetTotalStat().AttackSpeed;
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();  // AnimInstance는 Skeletal Mesh에 존재
 	AnimInstance->Montage_Play(ComboActionMontage, AttackSpeedRate);  // Montage Asset을 지정해 Play
 
@@ -183,7 +183,7 @@ void AABCharacterBase::SetComboCheckTimer()
 	int32 ComboIndex = CurrentCombo - 1;
 	ensure(ComboActionData->EffectiveFrameCount.IsValidIndex(ComboIndex));
 
-	constexpr float AttackSpeedRate = 1.0f;
+	const float AttackSpeedRate = Stat->GetTotalStat().AttackSpeed;
 	float ComboEffectiveTime = (ComboActionData->EffectiveFrameCount[ComboIndex] / ComboActionData->FrameRate) / AttackSpeedRate;
 	if(ComboEffectiveTime > 0.0f) // 입력 시간이 유효한 경우
 	{
@@ -211,11 +211,11 @@ void AABCharacterBase::ComboCheck()
 
 void AABCharacterBase::AttackHitCheck()
 {
-	// TODO: Trace 채널을 이용해 물체가 서로 충돌하는 지 검사하는 로직 작성
-	constexpr float AttackRange = 40.0f;
-	constexpr float AttackRadius = 50.0f;
-	constexpr float AttackDamage = 100.0f;
+	const float AttackRange = Stat->GetTotalStat().AttackRange;
+	const float AttackRadius = 50.0f;  // 임시로 50 그대로 사용
+	const float AttackDamage = Stat->GetTotalStat().Attack;
 	FHitResult OutHit;
+	
 	// SweepSingleByChannel: World가 제공 -> GetWorld로부터 획득
 	if(GetWorld()->SweepSingleByChannel(
 		OutHit,
@@ -285,7 +285,7 @@ void AABCharacterBase::SetupCharacterWidget(UABUserWidget* InUserWidget)
 	// TODO: Hp Bar 등록
 	if(auto HpBarWidget = Cast<UABHpBarWidget>(InUserWidget))
 	{
-		HpBarWidget->SetMaxHp(Stat->GetMaxHp());
+		HpBarWidget->SetMaxHp(Stat->GetTotalStat().MaxHp);
 		HpBarWidget->UpdateHpBar(Stat->GetCurrentHp());
 		Stat->OnHpChanged.AddUObject(HpBarWidget, &UABHpBarWidget::UpdateHpBar);  // 델리게이트 등록
 	}
@@ -315,10 +315,21 @@ void AABCharacterBase::EquipWeapon(UABItemData* InItemData)
 			WeaponItemData->WeaponMesh.LoadSynchronous();  // 동기적 로딩
 		}
 		Weapon->SetSkeletalMesh(WeaponItemData->WeaponMesh.Get());  // Get()을 사용해 가져옴
+		Stat->SetModifierStat(WeaponItemData->ModifierStat);  // 웨폰 장착 시 ModifierStat을 Setter에 넣어줌
 	}
 }
 
 void AABCharacterBase::ReadScroll(UABItemData* InItemData)
 {
 	UE_LOG(LogABCharacter, Log, TEXT("Read Scroll"));
+}
+
+int32 AABCharacterBase::GetLevel()
+{
+	return Stat->GetCurrentLevel();
+}
+
+void AABCharacterBase::SetLevel(int32 NewLevel)
+{
+	Stat->SetLevelStat(NewLevel);
 }

@@ -15,7 +15,8 @@ StageTrigger(CreateDefaultSubobject<UBoxComponent>(TEXT("StageTrigger"))),
 CurrentStage(EStageState::Ready),
 OpponentClass(AABCharacterNonPlayer::StaticClass()),
 OpponentSpawnTime(2.0f),
-RewardBoxClass(AABItemBox::StaticClass())
+RewardBoxClass(AABItemBox::StaticClass()),
+CurrentStageNum(0)
 {
 	// Stage 세팅
 	// Stage = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Stage"));
@@ -78,6 +79,9 @@ RewardBoxClass(AABItemBox::StaticClass())
 		FVector BoxLocation = Stage->GetSocketLocation(GateSocket) / 2;
 		RewardBoxLocations.Add(GateSocket, BoxLocation);
 	}
+
+	// Stage Stat
+	
 }
 
 void AABStageGimmick::OnConstruction(const FTransform& Transform)
@@ -105,18 +109,25 @@ void AABStageGimmick::OnGateTriggerBeginOverlap(UPrimitiveComponent* OverlappedC
 	FName SocketName = FName(*ComponentTag.ToString().Left(2));  // +X, -X, +Y, -Y
 	check(Stage->DoesSocketExist(SocketName));  // 위에서 추출한 소켓 이름에 대응되는 소켓이 존재하는 지 검사
 
+	FVector NewLocation = Stage->GetSocketLocation(SocketName);
+
 	// 해당 위치에 무언가가 존재하는 지 검사
 	if(TArray<FOverlapResult> OutOverlaps; !GetWorld()->OverlapMultiByObjectType(
 		OutOverlaps,
-		Stage->GetSocketLocation(SocketName),
+		NewLocation,
 		FQuat::Identity,
 		FCollisionObjectQueryParams::InitType::AllStaticObjects,  // 자신을 제외한 모든 스태틱 오브젝트 타입에 대해 검사
 		FCollisionShape::MakeSphere(775),  // 큰 크기의 구체 생성
 		FCollisionQueryParams(SCENE_QUERY_STAT(GateTrigger), false, this)
 	))
 	{
-		// 아무것도 없을 시 해당 위치에 똑같은 기믹 액터 스폰
-		GetWorld()->SpawnActor<AABStageGimmick>(Stage->GetSocketLocation(SocketName), FRotator::ZeroRotator);
+		// Deferred Spawn으로 변경
+		FTransform NewTransform(NewLocation);
+		if(auto NewGimmick = GetWorld()->SpawnActorDeferred<AABStageGimmick>(AABStageGimmick::StaticClass(), NewTransform))
+		{
+			NewGimmick->SetStageNum(CurrentStageNum + 1);
+			NewGimmick->FinishSpawning(NewTransform);
+		}
 	}
 }
 
@@ -209,16 +220,19 @@ void AABStageGimmick::OnOpponentDestroyed(AActor* DestroyedActor)
 
 void AABStageGimmick::OnOpponentSpawn()
 {
-	const FVector SpawnLocation = GetActorLocation() + FVector::UpVector * 88;  // Spawn 위치
-	AActor* OpponentActor = GetWorld()->SpawnActor(OpponentClass, &SpawnLocation, &FRotator::ZeroRotator);  // 지정한 클래스를 넘겨 액터 스폰
-	if(AABCharacterNonPlayer* ABOpponentCharacter = Cast<AABCharacterNonPlayer>(OpponentActor))  // NPC로 캐스팅
+	const FTransform SpawnTransform(GetActorLocation() + FVector::UpVector * 88);
+	// 지연 Spawn
+	if (auto ABOpponentCharacter = GetWorld()->SpawnActorDeferred<AABCharacterNonPlayer>(OpponentClass, SpawnTransform))
 	{
-		ABOpponentCharacter->OnDestroyed.AddDynamic(this, &AABStageGimmick::OnOpponentDestroyed);  // OnDestroy 델리게이트에 위 함수 등록
+		ABOpponentCharacter->OnDestroyed.AddDynamic(this, &AABStageGimmick::OnOpponentDestroyed);
+		// OnDestroy 델리게이트에 위 함수 등록
+		ABOpponentCharacter->SetLevel(CurrentStageNum); // Stage Number로 레벨 지정
+		ABOpponentCharacter->FinishSpawning(SpawnTransform);
 	}
 }
 
 void AABStageGimmick::OnRewardTriggerBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
-	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+                                                  UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	for(const auto& RewardBox : RewardBoxes)
 	{
@@ -238,14 +252,23 @@ void AABStageGimmick::SpawnRewardBoxes()
 {
 	for(const auto& [Name, Location] : RewardBoxLocations)
 	{
-		FVector WorldSpawnLocation = GetActorLocation() + Location + FVector(0, 0, 30);
-		AActor* ItemActor = GetWorld()->SpawnActor(RewardBoxClass, &WorldSpawnLocation, &FRotator::ZeroRotator);
-		if(AABItemBox* RewardBoxActor = Cast<AABItemBox>(ItemActor))
+		if (AABItemBox* RewardBoxActor = GetWorld()->SpawnActorDeferred<AABItemBox>(
+			RewardBoxClass, FTransform(GetActorLocation() + Location + FVector(0, 0, 30))))
 		{
 			RewardBoxActor->Tags.Add(Name);
 			// Trigger Component가 protected로 되어있어서 Getter를 하나 파줘야 함.
-			RewardBoxActor->GetTrigger()->OnComponentBeginOverlap.AddDynamic(this, &AABStageGimmick::AABStageGimmick::OnRewardTriggerBeginOverlap);
+			RewardBoxActor->GetTrigger()->OnComponentBeginOverlap.AddDynamic(
+				this, &AABStageGimmick::AABStageGimmick::OnRewardTriggerBeginOverlap);
 			RewardBoxes.Add(RewardBoxActor);
+		}
+	}
+
+	// 모든 박스 위치에 대한 세팅 완료 시, 다시 순회해 FinishSpawning을 수행함
+	for(const auto& RewardBox : RewardBoxes)
+	{
+		if(RewardBox.IsValid())
+		{
+			RewardBox.Get()->FinishSpawning(RewardBox.Get()->GetActorTransform());
 		}
 	}
 }

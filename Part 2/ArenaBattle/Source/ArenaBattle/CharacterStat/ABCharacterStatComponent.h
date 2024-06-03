@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "GameData/ABCharacterStat.h"
 #include "ABCharacterStatComponent.generated.h"
 
 DECLARE_MULTICAST_DELEGATE(FOnHpZeroDelegate);  // 여러 객체가 등록할 수 있음. Hp == 0라는 시그널만 보냄(구조체)
@@ -26,7 +27,12 @@ public:
 	FOnHpZeroDelegate OnHpZero;
 	FOnHpChangedDelegate OnHpChanged;
 	
-	FORCEINLINE float GetMaxHp() { return MaxHp; }
+	void SetLevelStat(int32 NewLevel);
+	FORCEINLINE float GetCurrentLevel() const { return CurrentLevel; }
+	// 무기 획득 시 Modifier 스탯을 변경할 수 있도록
+	FORCEINLINE void SetModifierStat(const FABCharacterStat& InModifierStat) { ModifierStat = InModifierStat; }
+	// FABCharacterStat에서 정의한 operator+ 오버로딩을 이용해 Base + Modifier 값을 반환
+	FORCEINLINE FABCharacterStat GetTotalStat() const { return BaseStat + ModifierStat; }
 	FORCEINLINE float GetCurrentHp() { return CurrentHp; }
 	float ApplyDamage(float InDamage);
 
@@ -34,11 +40,15 @@ protected:
 	// HP값 변동 시 실행될 함수
 	void SetHp(float NewHp);
 	
-	// 배치한 캐릭터들마다 다른 값을 가지기 때문에 인스턴스마다 별도로 수행되는 것이 좋음: VisibleInstanceOnly
-	UPROPERTY(VisibleInstanceOnly, Category=Stat)
-	float MaxHp;
+	// MaxHp는 Base Stat으로 대체되기 때문에 삭제
 
-	// Stat Component Object들은 Disk에 저장됨. 그런데 Hp같은 스탯은 새로 지정되기 때문에 저장할 필요가 없음: Transient
+	// 아래 4가지 속성들은 캐릭터가 초기화될 때마다 언제든지 바뀔 수 있기 때문에, Transient로 저장하지 않도록 설정 & 에디터에서는 읽기 전용
 	UPROPERTY(Transient, VisibleInstanceOnly, Category=Stat)
 	float CurrentHp;
+	UPROPERTY(Transient, VisibleInstanceOnly, Category=Stat)
+	float CurrentLevel;  // 캐릭터 스탯은 현재 레벨 정보를 기반으로 Singleton으로부터 제공받음
+	UPROPERTY(Transient, VisibleInstanceOnly, Category=Stat, meta=(AllowPrivateAccess="true"))
+	FABCharacterStat BaseStat;
+	UPROPERTY(Transient, VisibleInstanceOnly, Category=Stat, meta=(AllowPrivateAccess="true"))
+	FABCharacterStat ModifierStat;
 };

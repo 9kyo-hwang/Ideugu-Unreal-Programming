@@ -35,6 +35,9 @@ public:
 	// Sets default values for this actor's properties
 	AABStageGimmick();
 
+	FORCEINLINE int32 GetStageNum() const { return CurrentStageNum; }
+	FORCEINLINE void SetStageNum(int32 NewStageNum) { CurrentStageNum = NewStageNum; }
+
 protected:
 	virtual void OnConstruction(const FTransform& Transform) override;
 
@@ -104,4 +107,9 @@ protected:
 
 	// 스폰 함수
 	void SpawnRewardBoxes();
+
+	// Stage Stat
+protected:
+	UPROPERTY(VisibleInstanceOnly, Category=Stat, meta=(AllowPrivateAccess="true"))
+	int32 CurrentStageNum;
 };

@@ -114,4 +114,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Equipment, meta=(AllowPrivateAccess="true"))
 	TObjectPtr<class USkeletalMeshComponent> Weapon;  // 무기를 담을 스켈레탈 메시 컴포넌트
+
+	// Stat Section
+public:
+	int32 GetLevel();
+	void SetLevel(int32 NewLevel);
 };

@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameData/ABCharacterStat.h"
 #include "Item/ABItemData.h"
 #include "ABWeaponItemData.generated.h"
 
@@ -22,4 +23,7 @@ public:
 	{
 		return FPrimaryAssetId("ABItemData", GetFName());
 	}
+
+	UPROPERTY(EditAnywhere, Category=Stat)
+	FABCharacterStat ModifierStat;
 };

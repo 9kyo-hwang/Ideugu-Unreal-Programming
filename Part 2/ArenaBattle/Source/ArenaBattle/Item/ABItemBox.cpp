@@ -25,7 +25,6 @@ AABItemBox::AABItemBox()
 	// Trigger Setup
 	Trigger->SetCollisionProfileName(CPROFILE_ABTRIGGER);  // Trigger용 전용 Collision Profile
 	Trigger->SetBoxExtent(FVector(40, 42, 30));  // 박스 컴포넌트에 크기 지정
-	Trigger->OnComponentBeginOverlap.AddDynamic(this, &AABItemBox::OnOverlapBegin);  // Dynamic Delegate -> 연결하는 함수는 UFUNCTION() 지정을 해줘야 함
 
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> BoxMeshRef(TEXT("/Script/Engine.StaticMesh'/Game/ArenaBattle/Environment/Props/SM_Env_Breakables_Box1.SM_Env_Breakables_Box1'"));
 	if(BoxMeshRef.Object)
@@ -44,6 +43,7 @@ AABItemBox::AABItemBox()
 	}
 }
 
+// FinishSpawning 함수 이후에 호출됨 -> BeginPlay와 동일한 효과
 void AABItemBox::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
@@ -62,6 +62,9 @@ void AABItemBox::PostInitializeComponents()
 		Item = Cast<UABItemData>(AssetPtr.Get());
 		ensure(Item);
 	}
+
+	// 생성자에서 처리하지 않고, 마지막에 처리하도록 설정
+	Trigger->OnComponentBeginOverlap.AddDynamic(this, &AABItemBox::OnOverlapBegin);  // Dynamic Delegate -> 연결하는 함수는 UFUNCTION() 지정을 해줘야 함
 }
 
 void AABItemBox::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
