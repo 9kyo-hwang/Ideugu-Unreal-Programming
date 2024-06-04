@@ -2,11 +2,16 @@
 
 
 #include "Character/ABCharacterNonPlayer.h"
+
+#include "AI/ABAIController.h"
 #include "Engine/AssetManager.h"
 
 AABCharacterNonPlayer::AABCharacterNonPlayer()
 {
 	GetMesh()->SetHiddenInGame(true);  // 메시가 로딩될 때까지는 Hidden == true
+
+	AIControllerClass = AABAIController::StaticClass();  // AIControllerClass 값을 우리가 정의한 클래스로 변경
+	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;  // 배치된 NPC 또는 Spawn된 캐릭터 모두 AIController에 의해 통제되도록
 }
 
 void AABCharacterNonPlayer::PostInitializeComponents()
