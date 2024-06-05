@@ -176,6 +176,12 @@ void AABCharacterBase::ComboActionEnd(UAnimMontage* TargetMontage, bool IsProper
 	CurrentCombo = 0;
 
 	GetCharacterMovement()->SetMovementMode(MOVE_Walking);  // 정상적으로 움직일 수 있도록
+
+	NotifyComboActionEnd();
+}
+
+void AABCharacterBase::NotifyComboActionEnd()
+{
 }
 
 void AABCharacterBase::SetComboCheckTimer()
@@ -212,7 +218,7 @@ void AABCharacterBase::ComboCheck()
 void AABCharacterBase::AttackHitCheck()
 {
 	const float AttackRange = Stat->GetTotalStat().AttackRange;
-	const float AttackRadius = 50.0f;  // 임시로 50 그대로 사용
+	const float AttackRadius = Stat->GetAttackRadius();
 	const float AttackDamage = Stat->GetTotalStat().Attack;
 	FHitResult OutHit;
 	

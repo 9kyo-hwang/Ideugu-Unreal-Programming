@@ -2,16 +2,16 @@
 
 
 #include "Character/ABCharacterNonPlayer.h"
-
-#include "AI/ABAIController.h"
 #include "Engine/AssetManager.h"
+#include "AI/ABAIController.h"
+#include "CharacterStat/ABCharacterStatComponent.h"
 
 AABCharacterNonPlayer::AABCharacterNonPlayer()
 {
-	GetMesh()->SetHiddenInGame(true);  // 메시가 로딩될 때까지는 Hidden == true
+	GetMesh()->SetHiddenInGame(true);
 
-	AIControllerClass = AABAIController::StaticClass();  // AIControllerClass 값을 우리가 정의한 클래스로 변경
-	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;  // 배치된 NPC 또는 Spawn된 캐릭터 모두 AIController에 의해 통제되도록
+	AIControllerClass = AABAIController::StaticClass();
+	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 }
 
 void AABCharacterNonPlayer::PostInitializeComponents()
@@ -28,21 +28,61 @@ void AABCharacterNonPlayer::SetDead()
 	Super::SetDead();
 
 	FTimerHandle DeadTimerHandle;
-	GetWorld()->GetTimerManager().SetTimer(DeadTimerHandle, FTimerDelegate::CreateLambda([&]
-	{
-		Destroy();
-	}), DeadEventDelayTime, false);
+	GetWorld()->GetTimerManager().SetTimer(DeadTimerHandle, FTimerDelegate::CreateLambda(
+		[&]()
+		{
+			Destroy();
+		}
+	), DeadEventDelayTime, false);
 }
 
 void AABCharacterNonPlayer::NPCMeshLoadCompleted()
 {
-	if(NPCMeshHandle.IsValid())  // 핸들이 유효하면 
+	if (NPCMeshHandle.IsValid())
 	{
-		if(auto NPCMesh = Cast<USkeletalMesh>(NPCMeshHandle->GetLoadedAsset()))  // 메시 로딩
+		USkeletalMesh* NPCMesh = Cast<USkeletalMesh>(NPCMeshHandle->GetLoadedAsset());
+		if (NPCMesh)
 		{
-			GetMesh()->SetSkeletalMesh(NPCMesh);  // 메시 지정
-			GetMesh()->SetHiddenInGame(false);  // 로딩 시 메시가 보이도록
+			GetMesh()->SetSkeletalMesh(NPCMesh);
+			GetMesh()->SetHiddenInGame(false);
 		}
 	}
-	NPCMeshHandle->ReleaseHandle();  // 핸들 해제
+
+	NPCMeshHandle->ReleaseHandle();
+}
+
+float AABCharacterNonPlayer::GetAIPatrolRadius()
+{
+	return 800.0f;
+}
+
+float AABCharacterNonPlayer::GetAIDetectRange()
+{
+	return 400.0f;
+}
+
+float AABCharacterNonPlayer::GetAIAttackRange()
+{
+	return Stat->GetTotalStat().AttackRange + Stat->GetAttackRadius() * 2;
+}
+
+float AABCharacterNonPlayer::GetAITurnSpeed()
+{
+	return 2.0f;
+}
+
+void AABCharacterNonPlayer::SetAIAttackDelegate(const FAICharacterAttackFinished& InOnAttackFinished)
+{
+	OnAttackFinished = InOnAttackFinished;
+}
+
+void AABCharacterNonPlayer::AttackByAI()
+{
+	ProcessComboCommand();
+}
+
+void AABCharacterNonPlayer::NotifyComboActionEnd()
+{
+	Super::NotifyComboActionEnd();
+	OnAttackFinished.ExecuteIfBound();
 }

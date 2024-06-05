@@ -6,6 +6,7 @@
 #include "BehaviorTree/BlackboardData.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "BehaviorTree/BehaviorTreeComponent.h"
+#include "AI/ABAI.h"
 
 AABAIController::AABAIController()
 {
@@ -27,6 +28,9 @@ void AABAIController::RunAI()
 	// BlackBoard로부터 컴포넌트들을 가져와야 함.
 	if(auto BlackboardPtr = Blackboard.Get(); UseBlackboard(BBAsset, BlackboardPtr))
 	{
+		// HomePosition이 이미 정해져있음 -> Blackboard에 바로 설정
+		// AI 컨트롤러에 빙의한 폰의 위치
+		Blackboard->SetValueAsVector(BBKEY_HOMEPOS, GetPawn()->GetActorLocation());
 		ensure(RunBehaviorTree(BTAsset));  // 구동 실패 시 Assertion Failed 발생
 	}
 }

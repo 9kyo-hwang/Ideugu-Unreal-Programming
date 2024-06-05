@@ -5,13 +5,14 @@
 #include "CoreMinimal.h"
 #include "Character/ABCharacterBase.h"
 #include "Engine/StreamableManager.h"
+#include "Interface/ABCharacterAIInterface.h"
 #include "ABCharacterNonPlayer.generated.h"
 
 /**
  * 
  */
 UCLASS(Config=ArenaBattle)  // Config 폴더에 Default"ArenaBattle".ini 파일을 사용함
-class ARENABATTLE_API AABCharacterNonPlayer : public AABCharacterBase
+class ARENABATTLE_API AABCharacterNonPlayer : public AABCharacterBase, public IABCharacterAIInterface
 {
 	GENERATED_BODY()
 
@@ -30,4 +31,18 @@ protected:
 	TArray<FSoftObjectPath> NPCMeshes;  // 경로들을 저장함
 
 	TSharedPtr<FStreamableHandle> NPCMeshHandle;  // 비동기 로드
+
+	// AI Section
+protected:
+	virtual float GetAIAttackRange() override;
+	virtual float GetAIDetectRange() override;
+	virtual float GetAIPatrolRadius() override;
+	virtual float GetAITurnSpeed() override;
+
+	virtual void SetAIAttackDelegate(const FAICharacterAttackFinished& InOnAttackFinished) override;
+	virtual void AttackByAI() override;
+
+	FAICharacterAttackFinished OnAttackFinished;  // 전달받은 델리게이트 저장 변수
+
+	virtual void NotifyComboActionEnd() override;
 };

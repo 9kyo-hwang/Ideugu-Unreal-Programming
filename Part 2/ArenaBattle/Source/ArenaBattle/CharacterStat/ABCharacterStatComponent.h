@@ -33,7 +33,8 @@ public:
 	FORCEINLINE void SetModifierStat(const FABCharacterStat& InModifierStat) { ModifierStat = InModifierStat; }
 	// FABCharacterStat에서 정의한 operator+ 오버로딩을 이용해 Base + Modifier 값을 반환
 	FORCEINLINE FABCharacterStat GetTotalStat() const { return BaseStat + ModifierStat; }
-	FORCEINLINE float GetCurrentHp() { return CurrentHp; }
+	FORCEINLINE float GetCurrentHp() const { return CurrentHp; }
+	FORCEINLINE float GetAttackRadius() const { return AttackRadius; }
 	float ApplyDamage(float InDamage);
 
 protected:
@@ -47,6 +48,8 @@ protected:
 	float CurrentHp;
 	UPROPERTY(Transient, VisibleInstanceOnly, Category=Stat)
 	float CurrentLevel;  // 캐릭터 스탯은 현재 레벨 정보를 기반으로 Singleton으로부터 제공받음
+	UPROPERTY(VisibleInstanceOnly, Category=Stat, meta=(AllowPrivateAccess="true"))
+	float AttackRadius;
 	UPROPERTY(Transient, VisibleInstanceOnly, Category=Stat, meta=(AllowPrivateAccess="true"))
 	FABCharacterStat BaseStat;
 	UPROPERTY(Transient, VisibleInstanceOnly, Category=Stat, meta=(AllowPrivateAccess="true"))

@@ -64,7 +64,7 @@ protected:
 	// 몽타주 종료 시 호출
 	// 몽타주에 설정된 Delegate를 통해 호출될 수 있도록 파라미터 설정
 	void ComboActionEnd(class UAnimMontage* TargetMontage, bool IsProperlyEnded);
-
+	virtual void NotifyComboActionEnd();  // 몽타주를 포함하지 않는 콤보 액션 종료 알림 함수
 	void SetComboCheckTimer();  // 타이머를 발동시킬 함수
 	void ComboCheck();  // 타이머 발동 시 입력이 들어왔는 지 점검하는 함수
 
