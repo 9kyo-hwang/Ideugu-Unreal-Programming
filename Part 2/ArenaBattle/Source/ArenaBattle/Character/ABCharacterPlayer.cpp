@@ -8,6 +8,8 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "ABCharacterControlData.h"
+#include "CharacterStat/ABCharacterStatComponent.h"
+#include "UI/ABHUDWidget.h"
 
 AABCharacterPlayer::AABCharacterPlayer()
 {
@@ -65,7 +67,24 @@ void AABCharacterPlayer::BeginPlay()
 {
 	Super::BeginPlay();
 
+	// SetDead에서 입력을 끄기 때문에, 여기서는 입력을 키는 기능을 적용하는 것이 좋음
+	if(auto PlayerController = Cast<APlayerController>(GetController()))
+	{
+		EnableInput(PlayerController);
+	}
+	
 	SetCharacterControl(CurrentCharacterControlType);
+}
+
+void AABCharacterPlayer::SetDead()
+{
+	Super::SetDead();
+
+	// TODO: Character Base에서 수행한 기능에 이어, 입력을 더 이상 전달하지 않도록 끄는 기능 추가
+	if(auto PlayerController = Cast<APlayerController>(GetController()))
+	{
+		DisableInput(PlayerController);
+	}
 }
 
 void AABCharacterPlayer::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
@@ -176,4 +195,16 @@ void AABCharacterPlayer::Attack()
 {
 	// TODO: 몽타주 애니메이션 재생을 Base 클래스에서 구현 -> NPC와 플레이어가 이 애니메이션을 같이 재생하도록 설정
 	ProcessComboCommand();
+}
+
+void AABCharacterPlayer::SetupHUDWidget(UABHUDWidget* InHUDWidget)
+{
+	if(InHUDWidget)
+	{
+		InHUDWidget->UpdateStat(Stat->GetBaseStat(), Stat->GetModifierStat());
+		InHUDWidget->UpdateHpBar(Stat->GetCurrentHp());
+
+		Stat->OnStatChanged.AddUObject(InHUDWidget, &UABHUDWidget::UpdateStat);
+		Stat->OnHpChanged.AddUObject(InHUDWidget, &UABHUDWidget::UpdateHpBar);
+	}
 }

@@ -9,6 +9,7 @@
 
 DECLARE_MULTICAST_DELEGATE(FOnHpZeroDelegate);  // 여러 객체가 등록할 수 있음. Hp == 0라는 시그널만 보냄(구조체)
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnHpChangedDelegate, float /*CurrentHp*/);  // 변경된 현재 Hp 값을 보내도록 파라미터 지정
+DECLARE_MULTICAST_DELEGATE_TwoParams(FOnStatChangedDelegate, const FABCharacterStat& /*BaseStat*/, const FABCharacterStat& /*ModifierStat*/);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class ARENABATTLE_API UABCharacterStatComponent : public UActorComponent
@@ -20,21 +21,25 @@ public:
 	UABCharacterStatComponent();
 
 protected:
-	// Called when the game starts
-	virtual void BeginPlay() override;
+	virtual void InitializeComponent() override;  // 초기화 시점 이동
 
 public:
 	FOnHpZeroDelegate OnHpZero;
 	FOnHpChangedDelegate OnHpChanged;
-	
-	void SetLevelStat(int32 NewLevel);
-	FORCEINLINE float GetCurrentLevel() const { return CurrentLevel; }
-	// 무기 획득 시 Modifier 스탯을 변경할 수 있도록
-	FORCEINLINE void SetModifierStat(const FABCharacterStat& InModifierStat) { ModifierStat = InModifierStat; }
-	// FABCharacterStat에서 정의한 operator+ 오버로딩을 이용해 Base + Modifier 값을 반환
+	FOnStatChangedDelegate OnStatChanged;
+
+	FORCEINLINE const FABCharacterStat& GetBaseStat() const { return BaseStat; }
+	FORCEINLINE const FABCharacterStat& GetModifierStat() const { return ModifierStat; }
 	FORCEINLINE FABCharacterStat GetTotalStat() const { return BaseStat + ModifierStat; }
+	FORCEINLINE void AddBaseStat(const FABCharacterStat& InAddStat) { BaseStat = BaseStat + InAddStat; OnStatChanged.Broadcast(GetBaseStat(), GetModifierStat()); }
+	FORCEINLINE void SetBaseStat(const FABCharacterStat& InBaseStat) { BaseStat = InBaseStat; OnStatChanged.Broadcast(GetBaseStat(), GetModifierStat()); }
+	FORCEINLINE void SetModifierStat(const FABCharacterStat& InModifierStat) { ModifierStat = InModifierStat; OnStatChanged.Broadcast(GetBaseStat(), GetModifierStat()); }
+	FORCEINLINE void HealHp(float InHealAmount) { CurrentHp = FMath::Clamp(CurrentHp + InHealAmount, 0, GetTotalStat().MaxHp); OnHpChanged.Broadcast(CurrentHp); }
+	FORCEINLINE float GetCurrentLevel() const { return CurrentLevel; }
 	FORCEINLINE float GetCurrentHp() const { return CurrentHp; }
 	FORCEINLINE float GetAttackRadius() const { return AttackRadius; }
+		
+	void SetLevelStat(int32 NewLevel);
 	float ApplyDamage(float InDamage);
 
 protected:

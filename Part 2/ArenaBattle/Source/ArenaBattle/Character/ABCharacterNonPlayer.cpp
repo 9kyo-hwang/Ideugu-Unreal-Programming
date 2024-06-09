@@ -27,6 +27,12 @@ void AABCharacterNonPlayer::SetDead()
 {
 	Super::SetDead();
 
+	// TODO: 더 이상 AI 로직이 동작하지 않도록 설정
+	if(auto AIController = Cast<AABAIController>(GetController()))
+	{
+		AIController->StopAI();
+	}
+	
 	FTimerHandle DeadTimerHandle;
 	GetWorld()->GetTimerManager().SetTimer(DeadTimerHandle, FTimerDelegate::CreateLambda(
 		[&]()

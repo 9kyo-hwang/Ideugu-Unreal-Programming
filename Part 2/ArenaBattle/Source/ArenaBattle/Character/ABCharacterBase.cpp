@@ -11,7 +11,7 @@
 #include "Engine/DamageEvents.h"
 #include "Physics/ABCollision.h"
 #include "Item/ABItemData.h"
-#include "Item/ABWeaponItemData.h"
+#include "Item/ABItems.h"  // change!
 #include "UI/ABWidgetComponent.h"
 #include "UI/ABHpBarWidget.h"
 
@@ -121,6 +121,7 @@ void AABCharacterBase::PostInitializeComponents()
 	Super::PostInitializeComponents();
 
 	Stat->OnHpZero.AddUObject(this, &AABCharacterBase::SetDead);
+	Stat->OnStatChanged.AddUObject(this, &AABCharacterBase::ApplyStat);
 }
 
 void AABCharacterBase::SetCharacterControlData(const UABCharacterControlData* CharacterControlData)
@@ -291,9 +292,10 @@ void AABCharacterBase::SetupCharacterWidget(UABUserWidget* InUserWidget)
 	// TODO: Hp Bar 등록
 	if(auto HpBarWidget = Cast<UABHpBarWidget>(InUserWidget))
 	{
-		HpBarWidget->SetMaxHp(Stat->GetTotalStat().MaxHp);
+		HpBarWidget->UpdateStat(Stat->GetBaseStat(), Stat->GetModifierStat());
 		HpBarWidget->UpdateHpBar(Stat->GetCurrentHp());
 		Stat->OnHpChanged.AddUObject(HpBarWidget, &UABHpBarWidget::UpdateHpBar);  // 델리게이트 등록
+		Stat->OnStatChanged.AddUObject(HpBarWidget, &UABHpBarWidget::UpdateStat);  // 델리게이트 등록
 	}
 }
 
@@ -307,7 +309,10 @@ void AABCharacterBase::TakeItem(UABItemData* InItemData)
 
 void AABCharacterBase::DrinkPotion(UABItemData* InItemData)
 {
-	UE_LOG(LogABCharacter, Log, TEXT("Drink Potion"));
+	if(auto Potion = Cast<UABPotionItemData>(InItemData))
+	{
+		Stat->HealHp(Potion->HealAmount);
+	}
 }
 
 void AABCharacterBase::EquipWeapon(UABItemData* InItemData)
@@ -327,7 +332,10 @@ void AABCharacterBase::EquipWeapon(UABItemData* InItemData)
 
 void AABCharacterBase::ReadScroll(UABItemData* InItemData)
 {
-	UE_LOG(LogABCharacter, Log, TEXT("Read Scroll"));
+	if(auto Scroll = Cast<UABScrollItemData>(InItemData))
+	{
+		Stat->AddBaseStat(Scroll->BaseStat);
+	}
 }
 
 int32 AABCharacterBase::GetLevel()
@@ -338,4 +346,10 @@ int32 AABCharacterBase::GetLevel()
 void AABCharacterBase::SetLevel(int32 NewLevel)
 {
 	Stat->SetLevelStat(NewLevel);
+}
+
+void AABCharacterBase::ApplyStat(const FABCharacterStat& BaseStat, const FABCharacterStat& ModifierStat)
+{
+	float MovementSpeed = (BaseStat + ModifierStat).MovementSpeed;
+	GetCharacterMovement()->MaxWalkSpeed = MovementSpeed;
 }

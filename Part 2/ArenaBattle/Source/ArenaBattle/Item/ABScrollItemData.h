@@ -5,28 +5,24 @@
 #include "CoreMinimal.h"
 #include "GameData/ABCharacterStat.h"
 #include "Item/ABItemData.h"
-#include "ABWeaponItemData.generated.h"
+#include "ABScrollItemData.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class ARENABATTLE_API UABWeaponItemData : public UABItemData
+class ARENABATTLE_API UABScrollItemData : public UABItemData
 {
 	GENERATED_BODY()
 
 public:
-	UABWeaponItemData();
-	
-	UPROPERTY(EditAnywhere, Category=Weapon)
-	TSoftObjectPtr<class USkeletalMesh> WeaponMesh;  // Soft Referencing
-
-	// 아이템 종류 무관하게 같은 태그를 가지도록 설정
+	UABScrollItemData();
 	FORCEINLINE virtual FPrimaryAssetId GetPrimaryAssetId() const override
 	{
 		return FPrimaryAssetId("ABItemData", GetFName());
 	}
 
+	// 기본 스탯을 늘려주는 역할을 하기 때문에, 캐릭터 스탯이 필요함
 	UPROPERTY(EditAnywhere, Category=Stat)
-	FABCharacterStat ModifierStat;
+	FABCharacterStat BaseStat;
 };
