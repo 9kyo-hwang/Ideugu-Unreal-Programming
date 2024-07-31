@@ -2,7 +2,10 @@
 
 
 #include "Prop/ABFountain.h"
+
+#include "ArenaBattle.h"
 #include "Components/StaticMeshComponent.h"
+#include "Net/UnrealNetwork.h"
 
 // Sets default values
 AABFountain::AABFountain()
@@ -28,13 +31,29 @@ AABFountain::AABFountain()
 	{
 		Water->SetStaticMesh(WaterMeshRef.Object);
 	}
+
+	bReplicates = true;
+	NetUpdateFrequency = 1.0f;  // 기본값 변경
+	NetCullDistanceSquared = 4000000.0f;  // 인식 거리를 반경 20m로 제한
 }
 
 // Called when the game starts or when spawned
 void AABFountain::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	// if(HasAuthority())
+	// {
+	// 	FTimerHandle Handle;
+	// 	GetWorld()->GetTimerManager().SetTimer(Handle, FTimerDelegate::CreateLambda([&]
+	// 	{
+	// 		ServerRotationYaw += 1.0f;  // 값을 지속적으로 변경시킴
+	// 	}), 1.0f, true, 0.0f);
+	// }
+	// else  // 고정된 값이라 클라이언트에는 최초 1회만 전달됨
+	// {
+	// 	
+	// }
 }
 
 // Called every frame
@@ -42,5 +61,70 @@ void AABFountain::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	if(HasAuthority())  // Listen-Server 방식이기 때문에 명시적으로 분리해줘야 함. Dedicated-Server일 경우 필요 없음
+	{
+		AddActorLocalRotation(FRotator(0.0f, RotationRate * DeltaTime, 0.0f));
+		// Yaw 값만 float으로 전달함.
+		ServerRotationYaw = RootComponent->GetComponentRotation().Yaw;  // 액터 회전 = RootComponent를 돌리는 것
+	}
+	else
+	{
+		ClientTimeSinceUpdate += DeltaTime;  // 서버한테 데이터를 받는 중이 아니라면 DeltaTime 누적
+		if(ClientTimeBetweenLastUpdate < KINDA_SMALL_NUMBER)
+		{
+			return;
+		}
+
+		// 다음 네트워크 패킷 수신 때 올 회전값 예측
+		// 현재 서버로부터 받은 회전값 + 다음 패킷이 올 것으로 예상되는 시간 * 현재 회전율
+		const float EstimateRotationYaw = ServerRotationYaw + RotationRate * ClientTimeBetweenLastUpdate;
+		const float LerpRatio = ClientTimeSinceUpdate / ClientTimeBetweenLastUpdate;  // 보간할 비율
+
+		FRotator ClientRotator = RootComponent->GetComponentRotation();
+		const float ClientNewYaw = FMath::Lerp(ServerRotationYaw, EstimateRotationYaw, LerpRatio);
+		ClientRotator.Yaw = ClientNewYaw;
+		RootComponent->SetWorldRotation(ClientRotator);
+	}
+}
+
+void AABFountain::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(AABFountain, ServerRotationYaw);
+}
+
+void AABFountain::OnActorChannelOpen(FInBunch& InBunch, UNetConnection* Connection)
+{
+	AB_LOG(LogABNetwork, Log, TEXT("%s"), TEXT("Begin"));
+	
+	Super::OnActorChannelOpen(InBunch, Connection);  // 부모 액터에는 아무런 코드가 존재하지 않음(플레이어 컨트롤러 등에는 있을 수도 있음)
+
+	AB_LOG(LogABNetwork, Log, TEXT("%s"), TEXT("End"));
+}
+
+bool AABFountain::IsNetRelevantFor(const AActor* RealViewer, const AActor* ViewTarget, const FVector& SrcLocation) const
+{
+	// 뷰어, 뷰 타겟, 뷰어 위치
+	bool NetRelevantResult = Super::IsNetRelevantFor(RealViewer, ViewTarget, SrcLocation);
+	if(!NetRelevantResult)
+	{
+		AB_LOG(LogABNetwork, Log, TEXT("Not Relevant: [%s] %s"), *RealViewer->GetName(), *SrcLocation.ToCompactString());
+	}
+	return NetRelevantResult;
+}
+
+void AABFountain::OnRep_ServerRotationYaw()
+{
+	// Callback 기반으로 변경됐기 때문에 매 Tick마다 돌아가지 않는 경우 더 효율적임
+	AB_LOG(LogABNetwork, Log, TEXT("Yaw: %f"), ServerRotationYaw);
+
+	FRotator NewRotator = RootComponent->GetComponentRotation();
+	NewRotator.Yaw = ServerRotationYaw;  // Server로 부터 전달받은 새로운 Yaw 값을
+	RootComponent->SetWorldRotation(NewRotator);  // Client에 적용
+
+	// 서버로부터 데이터를 받았을 때 초기화
+	ClientTimeBetweenLastUpdate = ClientTimeSinceUpdate;
+	ClientTimeSinceUpdate = 0.0f;
 }
 

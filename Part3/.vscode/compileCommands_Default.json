@@ -1,0 +1,650 @@
+[
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\AI\\ABAI.h",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\AI\\ABAIController.cpp",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\AI\\ABAIController.h",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\AI\\BTDecorator_AttackInRange.cpp",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\AI\\BTDecorator_AttackInRange.h",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\AI\\BTService_Detect.cpp",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\AI\\BTService_Detect.h",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\AI\\BTTask_Attack.cpp",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\AI\\BTTask_Attack.h",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\AI\\BTTask_FindPatrolPos.cpp",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\AI\\BTTask_FindPatrolPos.h",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\AI\\BTTask_TurnToTarget.cpp",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\AI\\BTTask_TurnToTarget.h",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Animation\\ABAnimInstance.cpp",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Animation\\ABAnimInstance.h",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Animation\\AnimNotify_AttackHitCheck.cpp",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Animation\\AnimNotify_AttackHitCheck.h",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\ArenaBattle.Build.cs",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\ArenaBattle.cpp",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\ArenaBattle.h",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\CharacterStat\\ABCharacterStatComponent.cpp",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\CharacterStat\\ABCharacterStatComponent.h",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Character\\ABCharacterBase.cpp",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Character\\ABCharacterBase.h",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Character\\ABCharacterControlData.cpp",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Character\\ABCharacterControlData.h",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Character\\ABCharacterNonPlayer.cpp",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Character\\ABCharacterNonPlayer.h",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Character\\ABCharacterPlayer.cpp",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Character\\ABCharacterPlayer.h",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Character\\ABComboActionData.cpp",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Character\\ABComboActionData.h",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\GameData\\ABCharacterStat.h",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\GameData\\ABGameSingleton.cpp",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\GameData\\ABGameSingleton.h",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Game\\ABGameMode.cpp",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Game\\ABGameMode.h",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Game\\ABGameState.cpp",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Game\\ABGameState.h",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Gimmick\\ABStageGimmick.cpp",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Gimmick\\ABStageGimmick.h",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Interface\\ABAnimationAttackInterface.cpp",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Interface\\ABAnimationAttackInterface.h",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Interface\\ABCharacterAIInterface.cpp",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Interface\\ABCharacterAIInterface.h",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Interface\\ABCharacterHUDInterface.cpp",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Interface\\ABCharacterHUDInterface.h",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Interface\\ABCharacterItemInterface.cpp",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Interface\\ABCharacterItemInterface.h",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Interface\\ABCharacterWidgetInterface.cpp",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Interface\\ABCharacterWidgetInterface.h",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Interface\\ABGameInterface.cpp",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Interface\\ABGameInterface.h",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Item\\ABItemBox.cpp",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Item\\ABItemBox.h",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Item\\ABItemData.cpp",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Item\\ABItemData.h",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Item\\ABItems.h",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Item\\ABPotionItemData.cpp",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Item\\ABPotionItemData.h",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Item\\ABScrollItemData.cpp",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Item\\ABScrollItemData.h",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Item\\ABWeaponItemData.cpp",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Item\\ABWeaponItemData.h",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Physics\\ABCollision.h",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Player\\ABPlayerController.cpp",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Player\\ABPlayerController.h",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Player\\ABSaveGame.cpp",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Player\\ABSaveGame.h",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Prop\\ABFountain.cpp",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\Prop\\ABFountain.h",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\UI\\ABCharacterStatWidget.cpp",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\UI\\ABCharacterStatWidget.h",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\UI\\ABHUDWidget.cpp",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\UI\\ABHUDWidget.h",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\UI\\ABHpBarWidget.cpp",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\UI\\ABHpBarWidget.h",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\UI\\ABUserWidget.cpp",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\UI\\ABUserWidget.h",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\UI\\ABWidgetComponent.cpp",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    },
+    {
+        "file": "D:\\Github\\Ideugu-Unreal-Programming\\Part3\\Source\\ArenaBattle\\UI\\ABWidgetComponent.h",
+        "arguments": [
+            "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+            "@D:\\Github\\Ideugu-Unreal-Programming\\Part3\\.vscode\\compileCommands_Default\\ArenaBattle.261.rsp"
+        ],
+        "directory": "D:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+    }
+]
