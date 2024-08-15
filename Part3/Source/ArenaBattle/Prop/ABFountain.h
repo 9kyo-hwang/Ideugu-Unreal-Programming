@@ -31,9 +31,9 @@ public:
 
 public:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;  // lifetime
-	virtual void OnActorChannelOpen(FInBunch& InBunch, UNetConnection* Connection) override;  // Logic Channel
-	virtual bool IsNetRelevantFor(const AActor* RealViewer, const AActor* ViewTarget, const FVector& SrcLocation) const override;
-	virtual void PreReplication(IRepChangedPropertyTracker& ChangedPropertyTracker) override;
+	// virtual void OnActorChannelOpen(FInBunch& InBunch, UNetConnection* Connection) override;  // Logic Channel
+	// virtual bool IsNetRelevantFor(const AActor* RealViewer, const AActor* ViewTarget, const FVector& SrcLocation) const override;
+	// virtual void PreReplication(IRepChangedPropertyTracker& ChangedPropertyTracker) override;
 	
 	UPROPERTY(ReplicatedUsing=OnRep_ServerRotationYaw)  // 키워드 필요
 	float ServerRotationYaw;
@@ -53,6 +53,15 @@ public:
 
 	UFUNCTION()
 	void OnRep_ServerLightColor();
+
+	UFUNCTION(NetMulticast, Unreliable)
+	void MulticastRPCChangeLightColor(const FLinearColor& NewLightColor);
+
+	UFUNCTION(Server, Unreliable, WithValidation)
+	void ServerRPCChangeLightColor();
+
+	UFUNCTION(Client, Unreliable)
+	void ClientRPCChangeLightColor(const FLinearColor& NewLightColor);
 
 	float RotationRate = 30.0f;
 	float ClientTimeSinceUpdate = 0.0f;  // 서버로부터 패킷을 받은 후 얼마나 시간이 흘렀는가
