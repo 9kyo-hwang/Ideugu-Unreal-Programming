@@ -33,13 +33,26 @@ public:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;  // lifetime
 	virtual void OnActorChannelOpen(FInBunch& InBunch, UNetConnection* Connection) override;  // Logic Channel
 	virtual bool IsNetRelevantFor(const AActor* RealViewer, const AActor* ViewTarget, const FVector& SrcLocation) const override;
+	virtual void PreReplication(IRepChangedPropertyTracker& ChangedPropertyTracker) override;
 	
 	UPROPERTY(ReplicatedUsing=OnRep_ServerRotationYaw)  // 키워드 필요
 	float ServerRotationYaw;
 
+	UPROPERTY(ReplicatedUsing=OnRep_ServerLightColor)
+	FLinearColor ServerLightColor;
+
+	// 네트워크 대역폭 테스트
+	// UPROPERTY(Replicated)
+	// TArray<float> BigData;
+	//
+	// float BigDataElement = 0.0f;
+
 	// 속성이 변경됐을 때 호출될 콜백 함수
 	UFUNCTION()
 	void OnRep_ServerRotationYaw();
+
+	UFUNCTION()
+	void OnRep_ServerLightColor();
 
 	float RotationRate = 30.0f;
 	float ClientTimeSinceUpdate = 0.0f;  // 서버로부터 패킷을 받은 후 얼마나 시간이 흘렀는가
