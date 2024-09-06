@@ -18,10 +18,14 @@ class ARENABATTLE_API AABGameMode : public AGameModeBase, public IABGameInterfac
 public:
 	AABGameMode();
 
-	virtual void OnPlayerDead() override;
+	virtual void OnPlayerKilled(AController* Killer, AController* KilledPlayer, APawn* KilledPawn) override;
+	virtual FTransform GetRandomStartTransform() const override;
 
 	// virtual void PreLogin(const FString& Options, const FString& Address, const FUniqueNetIdRepl& UniqueId, FString& ErrorMessage) override;
 	// virtual APlayerController* Login(UPlayer* NewPlayer, ENetRole InRemoteRole, const FString& Portal, const FString& Options, const FUniqueNetIdRepl& UniqueId, FString& ErrorMessage) override;
 	// virtual void PostLogin(APlayerController* NewPlayer) override;
-	// virtual void StartPlay() override;
+	virtual void StartPlay() override;
+
+protected:
+	TArray<TObjectPtr<class APlayerStart>> PlayerStarts;
 };

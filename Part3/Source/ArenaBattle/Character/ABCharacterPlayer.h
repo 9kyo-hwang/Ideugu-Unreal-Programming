@@ -117,4 +117,15 @@ protected:
 // Teleport Section
 protected:
 	void Teleport();
+
+// PvP Section
+public:
+	void ResetPlayer();
+	void ResetAttack();
+
+	FTimerHandle AttackTimerHandle;
+	FTimerHandle DeadTimerHandle;
+
+protected:
+	virtual float TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 };

@@ -6,6 +6,8 @@
 #include "Player/ABPlayerController.h"
 #include "ArenaBattle.h"
 #include "ABGameState.h"
+#include "EngineUtils.h"
+#include "GameFramework/PlayerStart.h"
 
 AABGameMode::AABGameMode()
 {
@@ -24,9 +26,30 @@ AABGameMode::AABGameMode()
 	GameStateClass = AABGameState::StaticClass();  // GameMode ���� �� ���� ������ GameState�� �⺻���� �����ϴ� ���� �ʿ�
 }
 
-void AABGameMode::OnPlayerDead()
+void AABGameMode::OnPlayerKilled(AController* Killer, AController* KilledPlayer, APawn* KilledPawn)
 {
+}
 
+FTransform AABGameMode::GetRandomStartTransform() const
+{
+	// 현재 레벨의 Player Start 배열을 가져와야 함
+	if(PlayerStarts.IsEmpty())
+	{
+		return FTransform(FVector(0.0f, 0.0f, 0.0f));
+	}
+
+	int32 RandIndex = FMath::RandRange(0, PlayerStarts.Num() - 1);
+	return PlayerStarts[RandIndex]->GetActorTransform();
+}
+
+void AABGameMode::StartPlay()
+{
+	Super::StartPlay();
+
+	for(APlayerStart* PlayerStart : TActorRange<APlayerStart>(GetWorld()))
+	{
+		PlayerStarts.Add(PlayerStart);
+	}
 }
 
 // void AABGameMode::PreLogin(const FString& Options, const FString& Address, const FUniqueNetIdRepl& UniqueId, FString& ErrorMessage)
@@ -74,9 +97,3 @@ void AABGameMode::OnPlayerDead()
 // 	AB_LOG(LogABNetwork, Log, TEXT("%s"), TEXT("End"));
 // }
 //
-// void AABGameMode::StartPlay()
-// {
-// 	AB_LOG(LogABNetwork, Log, TEXT("%s"), TEXT("Begin"));
-// 	Super::StartPlay();
-// 	AB_LOG(LogABNetwork, Log, TEXT("%s"), TEXT("End"));
-// }

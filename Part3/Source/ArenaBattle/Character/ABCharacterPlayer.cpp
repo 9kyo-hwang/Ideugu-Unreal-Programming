@@ -17,6 +17,7 @@
 #include "ArenaBattle.h"
 #include "EngineUtils.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/WidgetComponent.h"
 #include "Engine/DamageEvents.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/GameStateBase.h"
@@ -98,12 +99,16 @@ void AABCharacterPlayer::BeginPlay()
 
 void AABCharacterPlayer::SetDead()
 {
+	// Super에서는 죽는 애니메이션 재생 후, HpBar Hidden, Collision = false 등 설정
 	Super::SetDead();
 
-	if (APlayerController* PlayerController = Cast<APlayerController>(GetController()))
-	{
-		DisableInput(PlayerController);
-	}
+	// ResetPlayer에서 이를 다 해제하는 기능을 구현함. 따라서 타이머를 걸어 5초 후에 ResetPlayer를 호출하도록 설정
+	GetWorldTimerManager().SetTimer(DeadTimerHandle, this, &AABCharacterPlayer::ResetPlayer, 5.0f, false);
+
+	// if (APlayerController* PlayerController = Cast<APlayerController>(GetController()))
+	// {
+	// 	DisableInput(PlayerController);
+	// }
 }
 
 void AABCharacterPlayer::PossessedBy(AController *NewController)
@@ -306,12 +311,14 @@ void AABCharacterPlayer::Attack()
 		bCanAttack = false;
 		GetCharacterMovement()->SetMovementMode(MOVE_None);  // OnRep을 호출하지 않고 다이렉트로 수행. 추후 결과 업데이트
 		
-		FTimerHandle Handle;
-		GetWorld()->GetTimerManager().SetTimer(Handle, FTimerDelegate::CreateLambda([&]
-		{
-			bCanAttack = true;
-			GetCharacterMovement()->SetMovementMode(MOVE_Walking);
-		}), AttackTime, false, -1.0f);
+		// FTimerHandle Handle;
+		// GetWorld()->GetTimerManager().SetTimer(Handle, FTimerDelegate::CreateLambda([&]
+		// {
+		// 	bCanAttack = true;
+		// 	GetCharacterMovement()->SetMovementMode(MOVE_Walking);
+		// }), AttackTime, false, -1.0f);
+
+		GetWorldTimerManager().SetTimer(AttackTimerHandle, this, &AABCharacterPlayer::ResetAttack, AttackTime, false);
 
 		PlayAttackAnimation();
 	}
@@ -402,13 +409,15 @@ void AABCharacterPlayer::ServerRPCAttack_Implementation(float AttackStartTime)
 	AB_LOG(LogABNetwork, Log, TEXT("LagTime: %f"), AttackTimeDifference);
 	AttackTimeDifference = FMath::Clamp(AttackTimeDifference, 0.0f, AttackTime - 0.01f);
 		
-	FTimerHandle Handle;
-	GetWorld()->GetTimerManager().SetTimer(Handle, FTimerDelegate::CreateLambda([&]
-	{
-		bCanAttack = true;
-		OnRep_CanAttack();
-	}), AttackTime - AttackTimeDifference, false, -1.0f);
+	// FTimerHandle Handle;
+	// GetWorld()->GetTimerManager().SetTimer(Handle, FTimerDelegate::CreateLambda([&]
+	// {
+	// 	bCanAttack = true;
+	// 	OnRep_CanAttack();
+	// }), AttackTime - AttackTimeDifference, false, -1.0f);
 
+	// 서버에서 전송되는 시간 오차를 검사해 Difference를 뺀 타이머로 적용
+	GetWorldTimerManager().SetTimer(AttackTimerHandle, this, &AABCharacterPlayer::ResetAttack, AttackTime - AttackTimeDifference, false);
 	LastAttackStartTime = AttackStartTime;
 
 	PlayAttackAnimation();  // Server에서도 애니메이션 재생은 해야지
@@ -459,7 +468,7 @@ bool AABCharacterPlayer::ServerRPCAttack_Validate(float AttackStartTime)
 	}
 
 	// 마지막 공격 시간 - 재공격 시간 < 기본 공격 시간 == 문제
-	return AttackStartTime - LastAttackStartTime > AttackTime;
+	return AttackStartTime - LastAttackStartTime > (AttackTime - 0.4f);
 }
 
 void AABCharacterPlayer::ServerRPCNotifyHit_Implementation(const FHitResult& HitResult, float HitCheckTime)
@@ -528,7 +537,7 @@ void AABCharacterPlayer::SetupHUDWidget(UABHUDWidget* InHUDWidget)
 	if (InHUDWidget)
 	{
 		InHUDWidget->UpdateStat(Stat->GetBaseStat(), Stat->GetModifierStat());
-		InHUDWidget->UpdateHpBar(Stat->GetCurrentHp());
+		InHUDWidget->UpdateHpBar(Stat->GetCurrentHp(), Stat->GetMaxHp());
 
 		Stat->OnStatChanged.AddUObject(InHUDWidget, &UABHUDWidget::UpdateStat);
 		Stat->OnHpChanged.AddUObject(InHUDWidget, &UABHUDWidget::UpdateHpBar);
@@ -542,4 +551,52 @@ void AABCharacterPlayer::Teleport()
 	{
 		ABCMC->SetTeleportCommand();
 	}
+}
+
+void AABCharacterPlayer::ResetPlayer()
+{
+	if(UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance())
+	{
+		// 혹시 모를 애니메이션(사망, 공격 등) 즉각 중단
+		AnimInstance->StopAllMontages(0.0f);
+	}
+
+	// 스탯 초기화
+	Stat->SetLevelStat(1);
+	Stat->ResetStat();
+	GetCharacterMovement()->SetMovementMode(MOVE_Walking);
+	SetActorEnableCollision(true);
+	HpBar->SetHiddenInGame(false);
+
+	if(HasAuthority())
+	{
+		if(IABGameInterface* ABGameMode = GetWorld()->GetAuthGameMode<IABGameInterface>())
+		{
+			FTransform NewTransform = ABGameMode->GetRandomStartTransform();
+			TeleportTo(NewTransform.GetLocation(), NewTransform.GetRotation().Rotator());
+		}
+	}
+}
+
+void AABCharacterPlayer::ResetAttack()
+{
+	bCanAttack = true;
+	GetCharacterMovement()->SetMovementMode(MOVE_Walking);
+}
+
+float AABCharacterPlayer::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator,
+	AActor* DamageCauser)
+{
+	const float ActualDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+
+	if(Stat->GetCurrentHp() <= 0.0f)
+	{
+		// GameMode에게 알려줌
+		if(IABGameInterface* ABGameMode = GetWorld()->GetAuthGameMode<IABGameInterface>())
+		{
+			ABGameMode->OnPlayerKilled(EventInstigator, GetController(), this);
+		}
+	}
+
+	return ActualDamage;
 }

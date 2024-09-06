@@ -265,13 +265,12 @@ void AABCharacterBase::PlayDeadAnimation()
 
 void AABCharacterBase::SetupCharacterWidget(UABUserWidget* InUserWidget)
 {
-	UABHpBarWidget* HpBarWidget = Cast<UABHpBarWidget>(InUserWidget);
-	if (HpBarWidget)
+	if (UABHpBarWidget* HpBarWidget = Cast<UABHpBarWidget>(InUserWidget))
 	{
-		HpBarWidget->UpdateStat(Stat->GetBaseStat(), Stat->GetModifierStat());
-		HpBarWidget->UpdateHpBar(Stat->GetCurrentHp());
+		// HpBarWidget->UpdateStat(Stat->GetBaseStat(), Stat->GetModifierStat());
+		HpBarWidget->UpdateHpBar(Stat->GetCurrentHp(), Stat->GetMaxHp());
 		Stat->OnHpChanged.AddUObject(HpBarWidget, &UABHpBarWidget::UpdateHpBar);
-		Stat->OnStatChanged.AddUObject(HpBarWidget, &UABHpBarWidget::UpdateStat);
+		// Stat->OnStatChanged.AddUObject(HpBarWidget, &UABHpBarWidget::UpdateStat);
 	}
 }
 
@@ -285,8 +284,10 @@ void AABCharacterBase::TakeItem(UABItemData* InItemData)
 
 void AABCharacterBase::DrinkPotion(UABItemData* InItemData)
 {
-	UABPotionItemData* PotionItemData = Cast<UABPotionItemData>(InItemData);
-	if (PotionItemData)
+	// 스탯 데이터 수정은 서버에서만 수행
+	if(!HasAuthority()) return;
+
+	if (UABPotionItemData* PotionItemData = Cast<UABPotionItemData>(InItemData))
 	{
 		Stat->HealHp(PotionItemData->HealAmount);
 	}
@@ -302,14 +303,21 @@ void AABCharacterBase::EquipWeapon(UABItemData* InItemData)
 			WeaponItemData->WeaponMesh.LoadSynchronous();
 		}
 		Weapon->SetSkeletalMesh(WeaponItemData->WeaponMesh.Get());
+	}
+
+	// 서버와 클라이언트가 무기를 들고 있는 비주얼이 다르더라도, 서버에서만 스탯에 의해 공격 범위와 데미지 설정
+	if(HasAuthority() && WeaponItemData)
+	{
 		Stat->SetModifierStat(WeaponItemData->ModifierStat);
 	}
 }
 
 void AABCharacterBase::ReadScroll(UABItemData* InItemData)
 {
-	UABScrollItemData* ScrollItemData = Cast<UABScrollItemData>(InItemData);
-	if (ScrollItemData)
+	// 스탯 데이터 수정은 서버에서만 수행
+	if(!HasAuthority()) return;
+	
+	if (UABScrollItemData* ScrollItemData = Cast<UABScrollItemData>(InItemData))
 	{
 		Stat->AddBaseStat(ScrollItemData->BaseStat);
 	}

@@ -13,9 +13,6 @@ UABCharacterStatComponent::UABCharacterStatComponent()
 	AttackRadius = 50.0f;
 
 	bWantsInitializeComponent = true;
-
-	// Network으로 Replicate하라고 설정해줘야 함
-	SetIsReplicated(true);
 }
 
 void UABCharacterStatComponent::InitializeComponent()
@@ -23,7 +20,12 @@ void UABCharacterStatComponent::InitializeComponent()
 	Super::InitializeComponent();
 
 	SetLevelStat(CurrentLevel);
-	SetHp(BaseStat.MaxHp);
+	ResetStat();
+
+	OnStatChanged.AddUObject(this, &UABCharacterStatComponent::SetNewMaxHp);
+
+	// 해당 기능은 언리얼 엔진에서 생성자에서 호출하는 것을 권장하지 않음
+	SetIsReplicated(true);
 }
 
 void UABCharacterStatComponent::SetLevelStat(int32 InNewLevel)
@@ -39,7 +41,7 @@ float UABCharacterStatComponent::ApplyDamage(float InDamage)
 	const float ActualDamage = FMath::Clamp<float>(InDamage, 0, InDamage);
 
 	SetHp(PrevHp - ActualDamage);
-	if (CurrentHp <= KINDA_SMALL_NUMBER)
+	if (CurrentHp <= 0.0f)
 	{
 		OnHpZero.Broadcast();
 	}
@@ -51,7 +53,7 @@ void UABCharacterStatComponent::SetHp(float NewHp)
 {
 	CurrentHp = FMath::Clamp<float>(NewHp, 0.0f, BaseStat.MaxHp);
 	
-	OnHpChanged.Broadcast(CurrentHp);
+	OnHpChanged.Broadcast(CurrentHp, MaxHp);
 }
 
 void UABCharacterStatComponent::BeginPlay()
@@ -72,16 +74,54 @@ void UABCharacterStatComponent::GetLifetimeReplicatedProps(TArray<FLifetimePrope
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(UABCharacterStatComponent, CurrentHp);  // Replication을 감지해 OnRep_함수 실행
+	DOREPLIFETIME(UABCharacterStatComponent, CurrentHp);
+	DOREPLIFETIME(UABCharacterStatComponent, MaxHp);
+	DOREPLIFETIME_CONDITION(UABCharacterStatComponent, BaseStat, COND_OwnerOnly);
+	DOREPLIFETIME_CONDITION(UABCharacterStatComponent, ModifierStat, COND_OwnerOnly);
+}
+
+void UABCharacterStatComponent::SetNewMaxHp(const FABCharacterStat& InBaseStat, const FABCharacterStat& InModifierStat)
+{
+	float PrevMaxHp = MaxHp;
+	MaxHp = GetTotalStat().MaxHp;
+	if(PrevMaxHp != MaxHp)
+	{
+		OnHpChanged.Broadcast(CurrentHp, MaxHp);
+	}
 }
 
 void UABCharacterStatComponent::OnRep_CurrentHp()
 {
 	AB_SUBLOG(LogABNetwork, Log, TEXT("%s"), TEXT("Begin"));
-	OnHpChanged.Broadcast(CurrentHp);
+	OnHpChanged.Broadcast(CurrentHp, MaxHp);
 	if(CurrentHp <= KINDA_SMALL_NUMBER)  // 0에 근접하면 사망
 	{
 		OnHpZero.Broadcast();
 	}
+}
+
+void UABCharacterStatComponent::OnRep_MaxHp()
+{
+	AB_SUBLOG(LogABNetwork, Log, TEXT("%s"), TEXT("Begin"));
+	OnHpChanged.Broadcast(CurrentHp, MaxHp);
+}
+
+void UABCharacterStatComponent::OnRep_BaseStat()
+{
+	AB_SUBLOG(LogABNetwork, Log, TEXT("%s"), TEXT("Begin"));
+	OnStatChanged.Broadcast(BaseStat, ModifierStat);  // 두 함수의 기능은 동일하나
+}
+
+void UABCharacterStatComponent::OnRep_ModifierStat()
+{
+	AB_SUBLOG(LogABNetwork, Log, TEXT("%s"), TEXT("Begin"));
+	OnStatChanged.Broadcast(BaseStat, ModifierStat);  // 헷갈릴 여지가 있으므로 일부러 분리
+}
+
+void UABCharacterStatComponent::ResetStat()
+{
+	SetLevelStat(CurrentLevel);  // 현재 레벨 스탯 정보 로드
+	MaxHp = BaseStat.MaxHp;  // 최대 HP를 가져온 다음
+	SetHp(MaxHp);  // 풀피 충전
 }
 
