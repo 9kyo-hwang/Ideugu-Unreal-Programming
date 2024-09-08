@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/GameModeBase.h"
+#include "GameFramework/GameMode.h"
 #include "Interface/ABGameInterface.h"
 #include "ABGameMode.generated.h"
 
@@ -11,7 +11,7 @@
  * 
  */
 UCLASS()
-class ARENABATTLE_API AABGameMode : public AGameModeBase, public IABGameInterface
+class ARENABATTLE_API AABGameMode : public AGameMode, public IABGameInterface
 {
 	GENERATED_BODY()
 	
@@ -26,6 +26,13 @@ public:
 	// virtual void PostLogin(APlayerController* NewPlayer) override;
 	virtual void StartPlay() override;
 
+protected:
+	virtual void PostInitializeComponents() override;
+	virtual void DefaultGameTimer();
+	void FinishMatch();
+
+	FTimerHandle GameTimerHandle;
+	
 protected:
 	TArray<TObjectPtr<class APlayerStart>> PlayerStarts;
 };

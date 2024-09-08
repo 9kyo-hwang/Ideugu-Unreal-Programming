@@ -3,18 +3,28 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/GameStateBase.h"
+#include "GameFramework/GameState.h"
 #include "ABGameState.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class ARENABATTLE_API AABGameState : public AGameStateBase
+class ARENABATTLE_API AABGameState : public AGameState
 {
 	GENERATED_BODY()
 	
 public:
-	virtual void HandleBeginPlay() override;
-	virtual void OnRep_ReplicatedHasBegunPlay() override;  // Å¬¶óÀÌ¾ðÆ®¿¡¼­ ¿ø°ÝÀ¸·Î È£ÃâµÇ´Â ÇÔ¼ö
+	AABGameState();
+
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+	
+	// virtual void HandleBeginPlay() override;
+	// virtual void OnRep_ReplicatedHasBegunPlay() override;  // Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È£ï¿½ï¿½Ç´ï¿½ ï¿½Ô¼ï¿½
+
+	UPROPERTY(Transient, Replicated)
+	int32 RemainingTime;
+
+	int32 MatchPlaytime = 2000;
+	int32 ShowResultWaitingTime = 5;
 };

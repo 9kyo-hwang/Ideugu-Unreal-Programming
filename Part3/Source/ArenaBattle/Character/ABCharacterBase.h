@@ -8,8 +8,10 @@
 #include "Interface/ABCharacterWidgetInterface.h"
 #include "Interface/ABCharacterItemInterface.h"
 #include "GameData/ABCharacterStat.h"
+#include "Engine/StreamableManager.h"
 #include "ABCharacterBase.generated.h"
 
+struct FStreamableHandle;
 DECLARE_LOG_CATEGORY_EXTERN(LogABCharacter, Log, All);
 
 UENUM()
@@ -112,4 +114,8 @@ public:
 	int32 GetLevel();
 	void SetLevel(int32 InNewLevel);
 	void ApplyStat(const FABCharacterStat& BaseStat, const FABCharacterStat& ModifierStat);
+
+public:
+	void MeshLoadCompleted();
+	TSharedPtr<FStreamableHandle> MeshHandle;
 };

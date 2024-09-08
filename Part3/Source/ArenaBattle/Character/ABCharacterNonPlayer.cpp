@@ -21,15 +21,15 @@ void AABCharacterNonPlayer::PostInitializeComponents()
 
 	ensure(NPCMeshes.Num() > 0);
 	int32 RandIndex = FMath::RandRange(0, NPCMeshes.Num() - 1);
-	NPCMeshHandle = UAssetManager::Get().GetStreamableManager().RequestAsyncLoad(NPCMeshes[RandIndex], FStreamableDelegate::CreateUObject(this, &AABCharacterNonPlayer::NPCMeshLoadCompleted));
+	MeshHandle = UAssetManager::Get().GetStreamableManager().RequestAsyncLoad(
+		NPCMeshes[RandIndex], FStreamableDelegate::CreateUObject(this, &AABCharacterBase::MeshLoadCompleted));
 }
 
 void AABCharacterNonPlayer::SetDead()
 {
 	Super::SetDead();
 
-	AABAIController* ABAIController = Cast<AABAIController>(GetController());
-	if (ABAIController)
+	if (AABAIController* ABAIController = Cast<AABAIController>(GetController()))
 	{
 		ABAIController->StopAI();
 	}
@@ -41,21 +41,6 @@ void AABCharacterNonPlayer::SetDead()
 			Destroy();
 		}
 	), DeadEventDelayTime, false);
-}
-
-void AABCharacterNonPlayer::NPCMeshLoadCompleted()
-{
-	if (NPCMeshHandle.IsValid())
-	{
-		USkeletalMesh* NPCMesh = Cast<USkeletalMesh>(NPCMeshHandle->GetLoadedAsset());
-		if (NPCMesh)
-		{
-			GetMesh()->SetSkeletalMesh(NPCMesh);
-			GetMesh()->SetHiddenInGame(false);
-		}
-	}
-
-	NPCMeshHandle->ReleaseHandle();
 }
 
 float AABCharacterNonPlayer::GetAIPatrolRadius()

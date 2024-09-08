@@ -11,7 +11,7 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(Config=ArenaBattle)
 class ARENABATTLE_API AABCharacterPlayer : public AABCharacterBase, public IABCharacterHUDInterface
 {
 	GENERATED_BODY()
@@ -128,4 +128,13 @@ public:
 
 protected:
 	virtual float TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
+
+// Player Mesh Section
+protected:
+	UPROPERTY(config)
+	TArray<FSoftObjectPath> PlayerMeshes;
+
+	void UpdateMeshFromPlayerState();
+
+	virtual void OnRep_PlayerState() override;
 };

@@ -23,13 +23,11 @@ protected:
 	virtual void PostInitializeComponents() override;
 
 protected:
-	void SetDead() override;
-	void NPCMeshLoadCompleted();
+	virtual void SetDead() override;
+	
 
 	UPROPERTY(config)
 	TArray<FSoftObjectPath> NPCMeshes;
-	
-	TSharedPtr<FStreamableHandle> NPCMeshHandle;
 
 // AI Section
 protected:

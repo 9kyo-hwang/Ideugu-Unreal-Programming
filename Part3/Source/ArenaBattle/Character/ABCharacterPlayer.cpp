@@ -18,9 +18,11 @@
 #include "EngineUtils.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/WidgetComponent.h"
+#include "Engine/AssetManager.h"
 #include "Engine/DamageEvents.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/GameStateBase.h"
+#include "GameFramework/PlayerState.h"
 #include "Net/UnrealNetwork.h"
 #include "Physics/ABCollision.h"
 
@@ -113,31 +115,9 @@ void AABCharacterPlayer::SetDead()
 
 void AABCharacterPlayer::PossessedBy(AController *NewController)
 {
-	AB_LOG(LogABNetwork, Log, TEXT("%s"), TEXT("Begin"));
-
-	AActor* OwnerActor = GetOwner();
-	if(OwnerActor)
-	{
-		AB_LOG(LogABNetwork, Log, TEXT("Owner: %s"), *OwnerActor->GetName());
-	}
-	else
-	{
-		AB_LOG(LogABNetwork, Log, TEXT("%s"), TEXT("No Owner"));
-	}
-
 	Super::PossessedBy(NewController);
 
-	OwnerActor = GetOwner();
-	if(OwnerActor)
-	{
-		AB_LOG(LogABNetwork, Log, TEXT("Owner: %s"), *OwnerActor->GetName());
-	}
-	else
-	{
-		AB_LOG(LogABNetwork, Log, TEXT("%s"), TEXT("No Owner"));
-	}
-
-	AB_LOG(LogABNetwork, Log, TEXT("%s"), TEXT("End"));
+	UpdateMeshFromPlayerState();
 }
 
 void AABCharacterPlayer::PostNetInit()
@@ -599,4 +579,18 @@ float AABCharacterPlayer::TakeDamage(float DamageAmount, FDamageEvent const& Dam
 	}
 
 	return ActualDamage;
+}
+
+void AABCharacterPlayer::UpdateMeshFromPlayerState()
+{
+	int32 MeshIndex = FMath::Clamp(GetPlayerState()->GetPlayerId() % PlayerMeshes.Num(), 0, PlayerMeshes.Num() - 1);
+	MeshHandle = UAssetManager::Get().GetStreamableManager().RequestAsyncLoad(
+		PlayerMeshes[MeshIndex], FStreamableDelegate::CreateUObject(this, &AABCharacterBase::MeshLoadCompleted));
+}
+
+void AABCharacterPlayer::OnRep_PlayerState()
+{
+	Super::OnRep_PlayerState();
+
+	UpdateMeshFromPlayerState();
 }

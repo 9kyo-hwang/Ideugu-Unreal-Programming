@@ -6,6 +6,7 @@
 #include "Player/ABPlayerController.h"
 #include "ArenaBattle.h"
 #include "ABGameState.h"
+#include "ABPlayerState.h"
 #include "EngineUtils.h"
 #include "GameFramework/PlayerStart.h"
 
@@ -24,10 +25,24 @@ AABGameMode::AABGameMode()
 	}
 
 	GameStateClass = AABGameState::StaticClass();  // GameMode ���� �� ���� ������ GameState�� �⺻���� �����ϴ� ���� �ʿ�
+	PlayerStateClass = AABPlayerState::StaticClass();
 }
 
 void AABGameMode::OnPlayerKilled(AController* Killer, AController* KilledPlayer, APawn* KilledPawn)
 {
+	AB_LOG(LogABNetwork, Log, TEXT("%s"), TEXT("Begin"));
+
+	// 가해자 스코어를 1 증가
+	if(APlayerState* KillerPlayerState = Killer->PlayerState)
+	{
+		KillerPlayerState->SetScore(KillerPlayerState->GetScore() + 1);
+
+		// 스코어가 2 초과이면 매치 종료
+		if(KillerPlayerState->GetScore() > 2)
+		{
+			FinishMatch();
+		}
+	}
 }
 
 FTransform AABGameMode::GetRandomStartTransform() const
@@ -49,6 +64,47 @@ void AABGameMode::StartPlay()
 	for(APlayerStart* PlayerStart : TActorRange<APlayerStart>(GetWorld()))
 	{
 		PlayerStarts.Add(PlayerStart);
+	}
+}
+
+void AABGameMode::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+
+	// 1초 당 한 번씩 default game timer를 수행하도록 처리
+	GetWorldTimerManager().SetTimer(GameTimerHandle, this, &AABGameMode::DefaultGameTimer, GetWorldSettings()->GetEffectiveTimeDilation(), true);
+}
+
+void AABGameMode::DefaultGameTimer()
+{
+	// 매칭 게임의 상태 변경
+	if(AABGameState* const ABGameState = Cast<AABGameState>(GameState); ABGameState->RemainingTime > 0)
+	{
+		ABGameState->RemainingTime--;
+		AB_LOG(LogABNetwork, Log, TEXT("Remaining Time: %d"), ABGameState->RemainingTime);
+		if(ABGameState->RemainingTime <= 0)
+		{
+			if(const FName CurrentMatchState = GetMatchState(); CurrentMatchState == MatchState::InProgress)
+			{
+				FinishMatch();
+			}
+			else if(CurrentMatchState == MatchState::WaitingPostMatch)
+			{
+				// 서버에 접속한 모든 클라이언트의 접속을 유지한 채 새 레벨로 이동
+				GetWorld()->ServerTravel(TEXT("/Game/ArenaBattle/Maps/Part3Step2?listen"));
+			}
+		}
+	}
+}
+
+void AABGameMode::FinishMatch()
+{
+	if(AABGameState* const ABGameState = Cast<AABGameState>(GameState); IsMatchInProgress())
+	{
+		// 호출 시 현재 매치 상태가 WaitingPostMatch로 변경
+		// 다음 번 틱에서는 ServerTravel()이 발동돼야 하나, RemainingTime이 0보다 작기 때문에 reset 필요
+		EndMatch();
+		ABGameState->RemainingTime = ABGameState->ShowResultWaitingTime;  // 20초 동안 게임을 기다리면 종료 -> 5초를 기다리면 서버 트래블
 	}
 }
 
